@@ -21,6 +21,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBContext;
@@ -35,6 +36,7 @@ import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
 import model.CurrentTrackData;
+import docs.com.calendarfx.model.Calendar;
 
 /**
  *
@@ -42,6 +44,8 @@ import model.CurrentTrackData;
  */
 public class MainController implements Initializable {
 
+    @FXML
+    private AnchorPane summaryPane;
     @FXML
     private LineChart<String, Number> hightDistanceLine;
     @FXML
@@ -79,6 +83,7 @@ public class MainController implements Initializable {
 
     private void initializeCharts(TrackData trackData) {
 
+        CalendarView calendar = new CalendarView();
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
