@@ -36,7 +36,8 @@ import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
 import model.CurrentTrackData;
-import docs.com.calendarfx.model.Calendar;
+
+
 
 /**
  *
@@ -83,7 +84,7 @@ public class MainController implements Initializable {
 
     private void initializeCharts(TrackData trackData) {
 
-        CalendarView calendar = new CalendarView();
+       
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
@@ -112,7 +113,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+       
+        
     }
 
 }

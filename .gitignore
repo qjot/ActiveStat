@@ -1,2 +1,4 @@
 /dist/
 /build/
+/nbproject/private/
+/lib/jfxtras-8.0/jfxtras-8.0/.nb-gradle/
