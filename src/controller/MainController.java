@@ -101,6 +101,19 @@ public class MainController implements Initializable {
         } else {
             // label.setText("Error loading GPX from " + file.getName());
         }
+
+        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
+        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
+        exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
+        distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
+        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
+        avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
+        maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
+        maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
+        minHeartRate.setText(String.valueOf(trackData.getMinHeartRate()));
+        avgHeartRate.setText(String.valueOf(trackData.averageHeartrateProperty().getValue()));
+        maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
+        avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
     }
 
     private void initializeCharts(TrackData trackData) {
@@ -115,18 +128,6 @@ public class MainController implements Initializable {
             seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
         }
         hightDistanceLine.getData().add(seriesLine);
-        dateLabel.setText(DateTimeUtils.format(trackData.getStartTime()));
-        durationLabel.setText(trackData.getTotalDuration().toString());
-        exerciseTimeLabel.setText(trackData.getMovingTime().toString());;
-        distanceLabel.setText(String.valueOf(trackData.getTotalDistance()));
-        slopeLabel.setText(String.valueOf(trackData.getTotalAscent()+trackData.getTotalDescend()));
-//        avgSpeedLabel;
-//        maxSpeedLabel;
-//        maxHeartRate;
-//        minHeartRate;
-//        avgHeartRate;
-//        maxPedalingRateLabel;
-//        avgPedalingRateLabel;
         //.getData().add(ChartsData.GetStringNumberSerie());
 
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));

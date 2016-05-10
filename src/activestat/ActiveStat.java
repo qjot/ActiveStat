@@ -7,8 +7,10 @@ package activestat;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
 import javafx.stage.Stage;
 
 /**
@@ -25,6 +27,14 @@ public class ActiveStat extends Application {
         stage.show();
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
+        
+    final ScrollBar sc = new ScrollBar();
+        sc.setLayoutX(scene.getWidth()-sc.getWidth());
+        sc.setMin(0);
+        sc.setOrientation(Orientation.VERTICAL);
+        sc.setPrefHeight(180);
+        sc.setMax(360);
+        
     }
 
     /**
