@@ -27,6 +27,62 @@
     -fx-opacity: 1;
 }
 
+.tab{
+    -fx-min-width: 300pt;
+    -fx-min-height: 50pt;
+    -fx-max-width: 1500pt; 
+    -fx-pref-width: 250pt;
+    -fx-pref-height:50pt;
+    -fx-font-size: 13pt;
+     -fx-alignment: CENTER;
+     -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 16 16 0 0;
+    -fx-background-color:
+        linear-gradient(#f0ff35, #a9ff00),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+
+}
+.tab-header-bacground{
+    -fx-background-color: green;
+}
+
+.tab:selected .focus-indicator {
+    -fx-border-radius: 20 10 0 0;
+    -fx-background-radius: 16 16 0 0;
+}
+
+.tab-label {    
+    -fx-padding: 0 0 0 130;
+}
+
+.monthTab .tab-label{
+    -fx-padding: 0 0 0 100;
+}
+
+ 
+.label {
+-fx-text-fill : black;
+ -fx-alignment: CENTER;
+}
+.optionLabel{
+        -fx-min-width: 300pt;
+    -fx-min-height: 25pt;
+    -fx-max-width: 1500pt; 
+    -fx-pref-width: 250pt;
+    -fx-pref-height:25pt;
+    -fx-font-size: 13pt;
+     -fx-alignment: CENTER;
+     -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 16 16 16 16;
+    -fx-background-color:
+        linear-gradient(#f0ff35, #a9ff00),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+}
+
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
@@ -120,6 +176,15 @@
     -fx-min-width:15;
     -fx-min-height:18;
 
+}
+.button-style {
+	-fx-background-color:
+        linear-gradient(#f0ff35, #a9ff00),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
 }
 .button > .image{
     -fx-background-color:transparent
@@ -286,7 +351,7 @@
     -fx-max-height: 2000px;
 }
 
-.ipad-dark-grey {
+ .ipad-dark-grey {
     -fx-background-color: 
         linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
         linear-gradient(#020b02, #3a3a3a),

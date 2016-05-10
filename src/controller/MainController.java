@@ -28,7 +28,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import jfxtras.scene.control.CalendarPicker;
 import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
 import jgpx.model.gpx.Track;
@@ -36,15 +35,37 @@ import jgpx.model.jaxb.GpxType;
 import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
-import model.CurrentTrackData;
-
-
 
 /**
  *
  * @author qjot
  */
 public class MainController implements Initializable {
+
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label durationLabel;
+    @FXML
+    private Label exerciseTimeLabel;
+    @FXML
+    private Label distanceLabel;
+    @FXML
+    private Label slopeLabel;
+    @FXML
+    private Label avgSpeedLabel;
+    @FXML
+    private Label maxSpeedLabel;
+    @FXML
+    private Label maxHeartRate;
+    @FXML
+    private Label minHeartRate;
+    @FXML
+    private Label avgHeartRate;
+    @FXML
+    private Label maxPedalingRateLabel;
+    @FXML
+    private Label avgPedalingRateLabel;
 
     @FXML
     private AnchorPane summaryPane;
@@ -58,12 +79,8 @@ public class MainController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
-    private CurrentTrackData tracksData;
     private TrackData trackData;
-    @FXML
-    private CalendarPicker calendarView;
-    
-    
+
     @FXML
     private void load(ActionEvent event) throws JAXBException {
         FileChooser fileChooser = new FileChooser();
@@ -84,11 +101,23 @@ public class MainController implements Initializable {
         } else {
             // label.setText("Error loading GPX from " + file.getName());
         }
+
+        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
+        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
+        exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
+        distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
+        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
+        avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
+        maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
+        maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
+        minHeartRate.setText(String.valueOf(trackData.getMinHeartRate()));
+        avgHeartRate.setText(String.valueOf(trackData.averageHeartrateProperty().getValue()));
+        maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
+        avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
     }
 
     private void initializeCharts(TrackData trackData) {
 
-       
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
@@ -117,8 +146,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        
+
     }
 
 }
