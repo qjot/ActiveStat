@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2016-05-10, 12:18:58
+    Author     : kaqq.pl
+*/
+
+.day-button, .weekend-button{
+    
+  -fx-background-radius: 0 0 0 0;
+  -fx-label-padding: 0 5 0 5;
+  -fx-background-image: url("../../images/runner.png");
+/*  -fx-background-color: black;*/
+-fx-background-repeat: stretch;
+-fx-background-size:25 ,20;
+-fx-background-position: 80%;
+
+
+}
+.day-button:disabled, .weekend-button:disabled{
+   -fx-background-image: url(null);
+    
+}

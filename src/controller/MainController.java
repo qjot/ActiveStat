@@ -28,6 +28,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import jfxtras.scene.control.CalendarPicker;
 import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
 import jgpx.model.gpx.Track;
@@ -59,7 +60,10 @@ public class MainController implements Initializable {
     private NumberAxis yAxis;
     private CurrentTrackData tracksData;
     private TrackData trackData;
-
+    @FXML
+    private CalendarPicker calendarView;
+    
+    
     @FXML
     private void load(ActionEvent event) throws JAXBException {
         FileChooser fileChooser = new FileChooser();

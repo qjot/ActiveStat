@@ -8,8 +8,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
+<?import jfxtras.scene.control.CalendarPicker?>
+<?import jfxtras.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="516.0" prefWidth="643.0" stylesheets="@MyStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
@@ -22,7 +22,8 @@
                          
                                 <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                             
+                              <CalendarPicker fx:id="calendar" prefHeight="180.0" prefWidth="643.0" stylesheets="@CalendarPicker.css" />
+                              
                            </children>
                                 </VBox>
                             </children>
