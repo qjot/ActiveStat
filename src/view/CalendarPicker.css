@@ -25,5 +25,5 @@ and open the template in the editor.
 }
 .highlight{
      -fx-background-image: url("../runner.png");
-     -fx-font-size: 12pt;
+     -fx-font-size: 11pt;
 }

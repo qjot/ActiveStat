@@ -29,6 +29,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -86,22 +87,66 @@ public class MainController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
-    private List<TrackData> trackDataList = new ArrayList();
+    private ObservableList<TrackData> partialResults;
     @FXML
     private CalendarPicker calendarView;
     @FXML
     private GridPane statsGrid;
-
+    FileParserRunner data;
     @FXML
     private void load(ActionEvent event) throws InterruptedException {
         FileChooser fileChooser = new FileChooser();
         List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(loadButton.getScene().getWindow());
 
-        FileParserRunner load = new FileParserRunner(trackDataList, trackDataFileList);
-        load.start();
+        data = new FileParserRunner(trackDataFileList, calendarView.highlightedCalendars());
+        data.start();
+       
     }
 
-    private void initializeCharts(TrackData trackData) {
+    
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal2 = new GregorianCalendar(2016, 05, 15);
+        Date dateparsed;
+        String dateInString = "20160511";
+        try {
+            dateparsed = sdf.parse(dateInString);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateparsed);
+            
+        } catch (ParseException ex) {
+            System.out.println("nie rozpoznano daty");
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(calendarView.highlightedCalendars().toString());
+
+        
+    }
+     private void changeWiew(TrackData trackData)
+        {
+            ChangeText(trackData);
+            ChangeCharts(trackData);
+         
+        }
+
+    private void ChangeText(TrackData trackData) {
+        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
+        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
+        exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
+        distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
+        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
+        avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
+        maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
+        maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
+        minHeartRate.setText(String.valueOf(trackData.getMinHeartRate()));
+        avgHeartRate.setText(String.valueOf(trackData.averageHeartrateProperty().getValue()));
+        maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
+        avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
+    }
+    private void ChangeCharts(TrackData trackData) {
 
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
@@ -129,24 +174,12 @@ public class MainController implements Initializable {
 //        text.appendText("\nTrack containing " + chunks.size() + " points");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal2 = new GregorianCalendar(2016, 05, 15);
-        Date dateparsed;
-        String dateInString = "20160511";
-        try {
-            dateparsed = sdf.parse(dateInString);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateparsed);
-            calendarView.highlightedCalendars().add(cal);
-        } catch (ParseException ex) {
-            System.out.println("nie rozpoznano daty");
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+    @FXML
+    private void ChangeCalendar(MouseEvent event) {
+        if(calendarView.getCalendar()!=null)
+        {
+       //data.getPartialResults().filtered(predicate ->);
         }
-        System.out.println(calendarView.highlightedCalendars().toString());
-
     }
-
 }
+
