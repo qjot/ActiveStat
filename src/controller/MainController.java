@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,7 @@ import jgpx.model.jaxb.GpxType;
 import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
+import model.FileParserRunner;
 
 /**
  *
@@ -84,45 +86,19 @@ public class MainController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
-    private TrackData trackData;
+    private List<TrackData> trackDataList = new ArrayList();
     @FXML
     private CalendarPicker calendarView;
     @FXML
     private GridPane statsGrid;
 
     @FXML
-    private void load(ActionEvent event) throws JAXBException {
+    private void load(ActionEvent event) throws InterruptedException {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
-        if (file == null) {
-            return;
-        }
-        //label.setText("Loading " + file.getName());
-        JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class, TrackPointExtensionT.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<Object> root = (JAXBElement<Object>) unmarshaller.unmarshal(file);
-        GpxType gpx = (GpxType) root.getValue();
+        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(loadButton.getScene().getWindow());
 
-        if (gpx != null) {
-            trackData = new TrackData(new Track(gpx.getTrk().get(0)));
-            initializeCharts(trackData);
-            //  label.setText("GPX successfully loaded");
-        } else {
-            // label.setText("Error loading GPX from " + file.getName());
-        }
-
-        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
-        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
-        exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
-        distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
-        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
-        avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
-        maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
-        maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
-        minHeartRate.setText(String.valueOf(trackData.getMinHeartRate()));
-        avgHeartRate.setText(String.valueOf(trackData.averageHeartrateProperty().getValue()));
-        maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
-        avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
+        FileParserRunner load = new FileParserRunner(trackDataList, trackDataFileList);
+        load.start();
     }
 
     private void initializeCharts(TrackData trackData) {
@@ -152,22 +128,23 @@ public class MainController implements Initializable {
 //
 //        text.appendText("\nTrack containing " + chunks.size() + " points");
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal2 = new GregorianCalendar(2016,05,15);
+        Calendar cal2 = new GregorianCalendar(2016, 05, 15);
         Date dateparsed;
         String dateInString = "20160511";
         try {
             dateparsed = sdf.parse(dateInString);
-             Calendar cal = Calendar.getInstance();
+            Calendar cal = Calendar.getInstance();
             cal.setTime(dateparsed);
             calendarView.highlightedCalendars().add(cal);
         } catch (ParseException ex) {
             System.out.println("nie rozpoznano daty");
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
         System.out.println(calendarView.highlightedCalendars().toString());
 
     }
