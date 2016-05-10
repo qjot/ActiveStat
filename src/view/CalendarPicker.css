@@ -11,14 +11,19 @@ and open the template in the editor.
 .day-button, .weekend-button{
     -fx-background-radius: 0 0 0 0;
     -fx-label-padding: 0 5 0 5;
-    -fx-background-image: url("../runner.png");
+   
     -fx-background-repeat: stretch;
     -fx-background-size:25 ,20;
     -fx-background-position: 80%;
-
-
+    -fx-font-size: 10pt;
+    -fx-min-height:40;
+  
+    /*-fx-background-color: radial-gradient(center 50% 50%, radius 80%, #99ff00 40%, #ffffff 60%);*/
 }
 .day-button:disabled, .weekend-button:disabled{
     -fx-background-image: url(null);
-
+}
+.highlight{
+     -fx-background-image: url("../runner.png");
+     -fx-font-size: 12pt;
 }
