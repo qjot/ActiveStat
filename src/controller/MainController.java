@@ -35,14 +35,37 @@ import jgpx.model.jaxb.GpxType;
 import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
-import model.CurrentTrackData;
-import docs.com.calendarfx.model.Calendar;
 
 /**
  *
  * @author qjot
  */
 public class MainController implements Initializable {
+
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label durationLabel;
+    @FXML
+    private Label exerciseTimeLabel;
+    @FXML
+    private Label distanceLabel;
+    @FXML
+    private Label slopeLabel;
+    @FXML
+    private Label avgSpeedLabel;
+    @FXML
+    private Label maxSpeedLabel;
+    @FXML
+    private Label maxHeartRate;
+    @FXML
+    private Label minHeartRate;
+    @FXML
+    private Label avgHeartRate;
+    @FXML
+    private Label maxPedalingRateLabel;
+    @FXML
+    private Label avgPedalingRateLabel;
 
     @FXML
     private AnchorPane summaryPane;
@@ -56,7 +79,6 @@ public class MainController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
-    private CurrentTrackData tracksData;
     private TrackData trackData;
 
     @FXML
@@ -83,7 +105,6 @@ public class MainController implements Initializable {
 
     private void initializeCharts(TrackData trackData) {
 
-        CalendarView calendar = new CalendarView();
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
@@ -94,6 +115,18 @@ public class MainController implements Initializable {
             seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
         }
         hightDistanceLine.getData().add(seriesLine);
+        dateLabel.setText(DateTimeUtils.format(trackData.getStartTime()));
+        durationLabel.setText(trackData.getTotalDuration().toString());
+        exerciseTimeLabel.setText(trackData.getMovingTime().toString());;
+        distanceLabel.setText(String.valueOf(trackData.getTotalDistance()));
+        slopeLabel.setText(String.valueOf(trackData.getTotalAscent()+trackData.getTotalDescend()));
+//        avgSpeedLabel;
+//        maxSpeedLabel;
+//        maxHeartRate;
+//        minHeartRate;
+//        avgHeartRate;
+//        maxPedalingRateLabel;
+//        avgPedalingRateLabel;
         //.getData().add(ChartsData.GetStringNumberSerie());
 
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));

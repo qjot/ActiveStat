@@ -16,13 +16,15 @@ import javafx.stage.Stage;
  * @author qjot
  */
 public class ActiveStat extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-        Scene scene = new Scene(root);        
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
     }
 
     /**
@@ -31,5 +33,5 @@ public class ActiveStat extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
