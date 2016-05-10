@@ -33,7 +33,7 @@
                            <children>
                               <VBox prefHeight="710.0" prefWidth="817.0">
                                  <children>
-                                      <CalendarPicker fx:id="calendar" prefHeight="180.0" prefWidth="643.0" stylesheets="@CalendarPicker.css" />
+                                      <CalendarPicker  fx:id="calendar" prefHeight="180.0" prefWidth="643.0" stylesheets="@CalendarPicker.css" />
                                     <Label fx:id="dateLabel" prefHeight="34.0" prefWidth="820.0" styleClass="optionLabel" text="Date" />
                                     <GridPane fx:id="statsGrid" prefHeight="220.0" prefWidth="820.0">
                                       <columnConstraints>
