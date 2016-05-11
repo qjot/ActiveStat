@@ -7,11 +7,13 @@ package controller;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +33,7 @@ import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
 import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  *
@@ -38,66 +41,29 @@ import model.FileParserRunner;
  */
 public class MainController implements Initializable {
 
-    @FXML
-    private Label dateLabel;
-    @FXML
-    private Label durationLabel;
-    @FXML
-    private Label exerciseTimeLabel;
-    @FXML
-    private Label distanceLabel;
-    @FXML
-    private Label slopeLabel;
-    @FXML
-    private Label avgSpeedLabel;
-    @FXML
-    private Label maxSpeedLabel;
-    @FXML
-    private Label maxHeartRate;
-    @FXML
-    private Label minHeartRate;
-    @FXML
-    private Label avgHeartRate;
-    @FXML
-    private Label maxPedalingRateLabel;
-    @FXML
-    private Label avgPedalingRateLabel;
-
-    @FXML
-    private LineChart<String, Number> hightDistanceLine;
-
-    @FXML
-    private CategoryAxis xAxis;
-    @FXML
-    private NumberAxis yAxis;
-    private ObservableList<TrackData> partialResults;
-    @FXML
-    private CalendarPicker calendarView;
-    @FXML
-    private GridPane statsGrid;
-    @FXML
-    private ScrollBar scrollBar;
-    @FXML
-    private VBox vBoxMain;
-    @FXML
-    private ProgressBar progressBarLoad;
-    FileParserRunner data;
-
-    @FXML
-    private void load(MouseEvent event) {
-
-        FileChooser fileChooser = new FileChooser();
-        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(vBoxMain.getScene().getWindow());
-        if (trackDataFileList != null) {
-            ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
-            ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
-
-            data = new FileParserRunner(trackDataFileList, CalendarRunningDates, CalendarSelectedDate);
-            data.setDaemon(false);
-            progressBarLoad.progressProperty().bind(data.ProgressProperty());
-            data.start();
-        }
-    }
+    @FXML private Label dateLabel;
+    @FXML private Label durationLabel;
+    @FXML private Label exerciseTimeLabel;
+    @FXML private Label distanceLabel;
+    @FXML private Label slopeLabel;
+    @FXML private Label avgSpeedLabel;
+    @FXML private Label maxSpeedLabel;
+    @FXML private Label maxHeartRate;
+    @FXML private Label minHeartRate;
+    @FXML private Label avgHeartRate;
+    @FXML private Label maxPedalingRateLabel;
+    @FXML private Label avgPedalingRateLabel;
+    @FXML private LineChart<String, Number> hightDistanceLine;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private CalendarPicker calendarView;
+    @FXML private GridPane statsGrid;
+    @FXML private ScrollBar scrollBar;
+    @FXML private VBox vBoxMain;
+    @FXML private ProgressBar progressBarLoad;
+    
+    FileParserRunner runningFileLoader;
+    private final ObservableList<TrackData> trackDatabase= observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,10 +74,26 @@ public class MainController implements Initializable {
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
-                changeWiew(data.partialResultsProperty().get().get(dateId));
+                changeWiew(trackDatabase.get(dateId));
             }
         });
     }
+      @FXML
+    private void load(MouseEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(vBoxMain.getScene().getWindow());
+        if (trackDataFileList != null) {
+            ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
+            ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
+
+            runningFileLoader = new FileParserRunner(trackDatabase, trackDataFileList, CalendarRunningDates, CalendarSelectedDate);
+            runningFileLoader.setDaemon(false);
+            progressBarLoad.progressProperty().bind(runningFileLoader.ProgressProperty());
+            runningFileLoader.start();
+        }
+    }
+
 
     private void changeWiew(TrackData trackData) {
         ChangeText(trackData);
