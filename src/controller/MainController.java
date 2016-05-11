@@ -7,50 +7,28 @@ package controller;
 
 import java.io.File;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javax.swing.JFileChooser;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import jfxtras.scene.control.CalendarPicker;
 import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
-import jgpx.model.gpx.Track;
-import jgpx.model.jaxb.GpxType;
-import jgpx.model.jaxb.TrackPointExtensionT;
-import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
 
@@ -132,10 +110,6 @@ public class MainController implements Initializable {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
                 changeWiew(data.partialResultsProperty().get().get(dateId));
             }
-           
-            else{
-                changeWiew(null);       
-            }
         });
     }
 
@@ -158,6 +132,7 @@ public class MainController implements Initializable {
         maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
         avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
     }
+
     private void ChangeCharts(TrackData trackData) {
 
         xAxis.setLabel("Ranges");

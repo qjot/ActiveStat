@@ -7,7 +7,6 @@ package model;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
@@ -24,7 +23,6 @@ import jgpx.model.gpx.Track;
 import jgpx.model.jaxb.GpxType;
 import jgpx.model.jaxb.TrackPointExtensionT;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -37,8 +35,6 @@ import javafx.beans.property.SimpleDoubleProperty;
  */
 public class FileParserRunner extends Thread {
 
-    //List<FileParser> threads;
-    // List<TrackData> trackDataList;
     private final ObservableList<Calendar> highlightedCalendars;
     private final List<File> trackDataFileList;
     private final DoubleProperty progress;
@@ -87,13 +83,8 @@ public class FileParserRunner extends Thread {
                 if (gpx != null) {
                     progress.set((float) iterations / max);
                     TrackData dat = new TrackData(new Track(gpx.getTrk().get(0)));
-                    LocalDateTime localdate = dat.getStartTime();
-                    Date d = Date.from(localdate.toInstant(ZoneOffset.UTC));
-                    Calendar cal = new GregorianCalendar();
                     LocalDateTime tempDate = dat.getStartTime();
                     Calendar cal2 = new GregorianCalendar(tempDate.getYear(), tempDate.getMonthValue(), tempDate.getDayOfMonth());
-                    cal.setTime(d);
-
                     Platform.runLater(() -> {
                         partialResults.get().add(dat);
                         highlightedCalendars.add(cal2);
