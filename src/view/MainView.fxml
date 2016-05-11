@@ -25,9 +25,9 @@
     <children>
       <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" prefHeight="58.0" prefWidth="427.0" progress="0.0" />
+            <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" onMouseClicked="#load" prefHeight="58.0" prefWidth="427.0" progress="0.0" />
             <Label prefHeight="34.0" prefWidth="113.0" style="-fx-text-fill: black;" text="Label" translateX="100.0" translateY="-20.0" />
-                        <CalendarPicker fx:id="calendarView" onMouseClicked="#ChangeCalendar" prefHeight="249.0" prefWidth="850.0" stylesheets="@CalendarPicker.css" />
+                        <CalendarPicker fx:id="calendarView" prefHeight="249.0" prefWidth="850.0" stylesheets="@CalendarPicker.css" />
               <TabPane prefHeight="568.0" prefWidth="716.0" tabClosingPolicy="UNAVAILABLE">
                   <tabs>
                       <Tab text="Training">

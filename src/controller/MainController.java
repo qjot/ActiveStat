@@ -87,8 +87,7 @@ public class MainController implements Initializable {
 
     @FXML
     private LineChart<String, Number> hightDistanceLine;
-    @FXML
-    private Button loadButton;
+
     @FXML
     private CategoryAxis xAxis;
     @FXML
@@ -103,53 +102,46 @@ public class MainController implements Initializable {
     @FXML
     private VBox vBoxMain;
     @FXML
-    private ProgressBar progressBarLoad;       
+    private ProgressBar progressBarLoad;
     FileParserRunner data;
 
     @FXML
-    private void load(ActionEvent event) throws InterruptedException {
-        FileChooser fileChooser = new FileChooser();
-        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(loadButton.getScene().getWindow());
-        ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
-        ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
-        data = new FileParserRunner(trackDataFileList,CalendarRunningDates, CalendarSelectedDate);
-        data.start();
+    private void load(MouseEvent event) {
 
+        FileChooser fileChooser = new FileChooser();
+        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(vBoxMain.getScene().getWindow());
+        if (trackDataFileList != null) {
+            ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
+            ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
+
+            data = new FileParserRunner(trackDataFileList, CalendarRunningDates, CalendarSelectedDate);
+            data.setDaemon(false);
+            progressBarLoad.progressProperty().bind(data.ProgressProperty());
+            data.start();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        scrollBar.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            vBoxMain.setLayoutY(-new_val.doubleValue());
+        });
 
-         scrollBar.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    vBoxMain.setLayoutY(-new_val.doubleValue());
+        calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
+            if (calendarView.highlightedCalendars().contains(new_val)) {
+                int dateId = calendarView.highlightedCalendars().indexOf(new_val);
+                changeWiew(data.partialResultsProperty().get().get(dateId));
+            }
+           
+            else{
+                changeWiew(null);       
             }
         });
-         
-         
-         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal2 = new GregorianCalendar(2016, 05, 15);
-        Date dateparsed;
-        String dateInString = "20160511";
-        try {
-            dateparsed = sdf.parse(dateInString);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateparsed);
-
-        } catch (ParseException ex) {
-            System.out.println("nie rozpoznano daty");
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(calendarView.highlightedCalendars().toString());
-
     }
 
     private void changeWiew(TrackData trackData) {
         ChangeText(trackData);
-        ChangeCharts(trackData);
-
+        //ChangeCharts(trackData);
     }
 
     private void ChangeText(TrackData trackData) {
@@ -166,7 +158,6 @@ public class MainController implements Initializable {
         maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
         avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
     }
-
     private void ChangeCharts(TrackData trackData) {
 
         xAxis.setLabel("Ranges");
@@ -195,10 +186,4 @@ public class MainController implements Initializable {
 //        text.appendText("\nTrack containing " + chunks.size() + " points");
     }
 
-    @FXML
-    private void ChangeCalendar(MouseEvent event) {
-        if (calendarView.getCalendar() != null) {
-            //data.getPartialResults().filtered(predicate ->);
-        }
-    }
 }
