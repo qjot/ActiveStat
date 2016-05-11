@@ -25,178 +25,182 @@
         <tabs>
             <Tab text="Training">
                <content>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="573.0" prefWidth="820.0">
-                    <content>
-                        <AnchorPane prefHeight="969.0" prefWidth="817.0">
+                  <ScrollPane fx:id="scrollPane">
+                     <content>
+                        <VBox prefHeight="710.0" prefWidth="846.0">
                            <children>
-                              <VBox prefHeight="710.0" prefWidth="817.0">
+                              <Label fx:id="dateLabel" prefHeight="34.0" prefWidth="820.0" styleClass="optionLabel" text="Date">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <GridPane fx:id="statsGrid" prefHeight="220.0" prefWidth="820.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="80.33334350585938" minHeight="10.0" prefHeight="53.666656494140625" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="75.33334350585938" minHeight="10.0" prefHeight="52.333343505859375" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="70.33334350585938" minHeight="10.0" prefHeight="52.666656494140625" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="56.333343505859375" minHeight="10.0" prefHeight="56.333343505859375" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <Label fx:id="dateLabel" prefHeight="34.0" prefWidth="820.0" styleClass="optionLabel" text="Date" />
-                                    <GridPane fx:id="statsGrid" prefHeight="220.0" prefWidth="820.0">
-                                      <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="80.33334350585938" minHeight="10.0" prefHeight="53.666656494140625" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="75.33334350585938" minHeight="10.0" prefHeight="52.333343505859375" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="70.33334350585938" minHeight="10.0" prefHeight="52.666656494140625" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="56.333343505859375" minHeight="10.0" prefHeight="56.333343505859375" vgrow="SOMETIMES" />
-                                      </rowConstraints>
+                                    <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@/stopper.png" />
-                                                   </image>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="DURATION" />
-                                                <Label fx:id="durationLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../scope.png" />
-                                                   </image>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="SLOPE" />
-                                                <Label fx:id="slopeLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../dumbbell-.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="EXERCISE TIME" />
-                                                <Label fx:id="exerciseTimeLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../distance.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="DISTANCE" />
-                                                <Label fx:id="distanceLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../speed-up.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="MAX SPEED" />
-                                                <Label fx:id="maxSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../speed-up.png" />
-                                                   </image>
-                                                   <HBox.margin>
-                                                      <Insets />
-                                                   </HBox.margin>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="AVG SPEED" />
-                                                <Label fx:id="avgSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../pedal%20(1).png" />
-                                                   </image>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="MAX PEDALING RATE" />
-                                                <Label fx:id="maxPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../heart-rate.png" />
-                                                   </image>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="MAX HEART RATE" />
-                                                <Label fx:id="maxHeartRate" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../heart-rate.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="MIN HEART RATE" />
-                                                <Label fx:id="minHeartRate" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../heart-rate.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="AVG HEART RATE" />
-                                                <Label fx:id="avgHeartRate" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="504.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../pedal%20(1).png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label prefHeight="56.0" prefWidth="122.0" text="AVG PEDALING RATE" />
-                                                <Label fx:id="avgPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
-                                             </children>
-                                          </HBox>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@/stopper.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="DURATION" />
+                                          <Label fx:id="durationLabel" prefHeight="96.0" prefWidth="106.0" />
                                        </children>
-                                    </GridPane>
-                                    <Label prefHeight="43.0" prefWidth="806.0" styleClass="optionLabel" text="Analysis" />
-                                    <LineChart>
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </LineChart>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../scope.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="SLOPE" />
+                                          <Label fx:id="slopeLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../dumbbell-.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="EXERCISE TIME" />
+                                          <Label fx:id="exerciseTimeLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../distance.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="DISTANCE" />
+                                          <Label fx:id="distanceLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../speed-up.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="MAX SPEED" />
+                                          <Label fx:id="maxSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../speed-up.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="AVG SPEED" />
+                                          <Label fx:id="avgSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../pedal%20(1).png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="MAX PEDALING RATE" />
+                                          <Label fx:id="maxPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../heart-rate.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="MAX HEART RATE" />
+                                          <Label fx:id="maxHeartRate" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../heart-rate.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="MIN HEART RATE" />
+                                          <Label fx:id="minHeartRate" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../heart-rate.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="AVG HEART RATE" />
+                                          <Label fx:id="avgHeartRate" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="504.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../pedal%20(1).png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label prefHeight="56.0" prefWidth="122.0" text="AVG PEDALING RATE" />
+                                          <Label fx:id="avgPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </VBox>
+                              </GridPane>
+                              <Label prefHeight="34.0" prefWidth="778.0" styleClass="optionLabel" text="Analysis" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LineChart>
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
                            </children>
-                        </AnchorPane>
-                    </content>
+                        </VBox>
+                     </content>
                   </ScrollPane>
                </content>
             </Tab>

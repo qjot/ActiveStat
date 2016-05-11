@@ -6,6 +6,8 @@
 package activestat;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
@@ -34,7 +36,7 @@ public class ActiveStat extends Application {
         sc.setOrientation(Orientation.VERTICAL);
         sc.setPrefHeight(180);
         sc.setMax(360);
-        
+      
     }
 
     /**

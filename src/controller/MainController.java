@@ -21,7 +21,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBContext;
@@ -68,7 +70,9 @@ public class MainController implements Initializable {
     private Label avgPedalingRateLabel;
 
     @FXML
-    private AnchorPane summaryPane;
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox vBoxMain;
     @FXML
     private LineChart<String, Number> hightDistanceLine;
     @FXML
@@ -102,11 +106,11 @@ public class MainController implements Initializable {
             // label.setText("Error loading GPX from " + file.getName());
         }
 
-        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
+        dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
         durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
-        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
+        slopeLabel.setText(String.format("%.0f m", trackData.getTotalAscent() + trackData.getTotalDescend()));
         avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
         maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
         maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
@@ -128,8 +132,8 @@ public class MainController implements Initializable {
             seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
         }
         hightDistanceLine.getData().add(seriesLine);
-        //.getData().add(ChartsData.GetStringNumberSerie());
 
+        //.getData().add(ChartsData.GetStringNumberSerie());
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));
 //        text.appendText("\nEnd time: " + DateTimeUtils.format(trackData.getEndTime()));
 //        text.appendText(String.format("\nTotal Distance: %.0f m", trackData.getTotalDistance()));
@@ -146,6 +150,15 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+//        scrollPane.widthProperty().addListener(
+//                (observable, oldvalue, newvalue)
+//                -> vBoxMain.setWidth((Double) newvalue / 2)
+//        );
+//        scrollPane.heightProperty().addListener(
+//                (observable, oldvalue, newvalue)
+//                -> vBoxMain.setHeight((Double) newvalue / 2)
+//        );
 
     }
 
