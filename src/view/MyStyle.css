@@ -177,11 +177,30 @@
     -fx-min-height:18;
 
 }
-.button-style {
-	-fx-background-color:
-        linear-gradient(#f0ff35, #a9ff00),
+.progress-bar > .track{
+	-fx-background-color:   
+        linear-gradient(#a9ff00,#f0ff35),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
-    -fx-background-radius: 6, 5;
+    -fx-background-radius: 50, 30,0,0;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+}
+
+.progress-bar > .bar{
+/*	-fx-background-color:   
+        linear-gradient(#a9ff00,#f0ff35),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);*/
+    -fx-background-radius: 50, 30,0,0;
+    -fx-background-insets: 0, 1;
+/*    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;*/
+}
+.button-style, .progressBar{
+	-fx-background-color:
+        linear-gradient(#a9ff00,#f0ff35),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 50, 30,0,0;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
