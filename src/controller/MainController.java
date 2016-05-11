@@ -7,9 +7,17 @@ package controller;
 
 import java.io.File;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,15 +29,16 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import jfxtras.scene.control.CalendarPicker;
 import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
 import jgpx.model.gpx.Track;
@@ -37,6 +46,7 @@ import jgpx.model.jaxb.GpxType;
 import jgpx.model.jaxb.TrackPointExtensionT;
 import jgpx.model.jaxb.TrkType;
 import jgpx.util.DateTimeUtils;
+import model.FileParserRunner;
 
 /**
  *
@@ -70,47 +80,64 @@ public class MainController implements Initializable {
     private Label avgPedalingRateLabel;
 
     @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private VBox vBoxMain;
-    @FXML
     private LineChart<String, Number> hightDistanceLine;
-    @FXML
-    private AreaChart<String, Number> areaChartHD;
     @FXML
     private Button loadButton;
     @FXML
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
-    private TrackData trackData;
-
+    private ObservableList<TrackData> partialResults;
     @FXML
-    private void load(ActionEvent event) throws JAXBException {
+    private CalendarPicker calendarView;
+    @FXML
+    private GridPane statsGrid;
+    FileParserRunner data;
+    @FXML
+    private void load(ActionEvent event) throws InterruptedException {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
-        if (file == null) {
-            return;
-        }
-        //label.setText("Loading " + file.getName());
-        JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class, TrackPointExtensionT.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<Object> root = (JAXBElement<Object>) unmarshaller.unmarshal(file);
-        GpxType gpx = (GpxType) root.getValue();
+        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(loadButton.getScene().getWindow());
 
-        if (gpx != null) {
-            trackData = new TrackData(new Track(gpx.getTrk().get(0)));
-            initializeCharts(trackData);
-            //  label.setText("GPX successfully loaded");
-        } else {
-            // label.setText("Error loading GPX from " + file.getName());
+        data = new FileParserRunner(trackDataFileList, calendarView.highlightedCalendars());
+        data.start();
+       
+    }
+
+    
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal2 = new GregorianCalendar(2016, 05, 15);
+        Date dateparsed;
+        String dateInString = "20160511";
+        try {
+            dateparsed = sdf.parse(dateInString);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateparsed);
+            
+        } catch (ParseException ex) {
+            System.out.println("nie rozpoznano daty");
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(calendarView.highlightedCalendars().toString());
+
+        
+    }
+     private void changeWiew(TrackData trackData)
+        {
+            ChangeText(trackData);
+            ChangeCharts(trackData);
+         
         }
 
-        dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
+    private void ChangeText(TrackData trackData) {
+        dateLabel.setText("Date: "+ DateTimeUtils.format(trackData.getStartTime()));
         durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
-        slopeLabel.setText(String.format("%.0f m", trackData.getTotalAscent() + trackData.getTotalDescend()));
+        slopeLabel.setText(String.format("%.0f m",trackData.getTotalAscent() + trackData.getTotalDescend()));
         avgSpeedLabel.setText(String.format("%.2f m/s", trackData.getAverageSpeed()));
         maxSpeedLabel.setText(String.format("%.2f m/s", trackData.getMaxSpeed()));
         maxHeartRate.setText(String.valueOf(trackData.getMaxHeartrate()));
@@ -119,8 +146,7 @@ public class MainController implements Initializable {
         maxPedalingRateLabel.setText(String.valueOf(trackData.getMaxCadence()));
         avgPedalingRateLabel.setText(String.valueOf(trackData.getAverageCadence()));
     }
-
-    private void initializeCharts(TrackData trackData) {
+    private void ChangeCharts(TrackData trackData) {
 
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
@@ -132,8 +158,8 @@ public class MainController implements Initializable {
             seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
         }
         hightDistanceLine.getData().add(seriesLine);
-
         //.getData().add(ChartsData.GetStringNumberSerie());
+
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));
 //        text.appendText("\nEnd time: " + DateTimeUtils.format(trackData.getEndTime()));
 //        text.appendText(String.format("\nTotal Distance: %.0f m", trackData.getTotalDistance()));
@@ -148,18 +174,12 @@ public class MainController implements Initializable {
 //        text.appendText("\nTrack containing " + chunks.size() + " points");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-//        scrollPane.widthProperty().addListener(
-//                (observable, oldvalue, newvalue)
-//                -> vBoxMain.setWidth((Double) newvalue / 2)
-//        );
-//        scrollPane.heightProperty().addListener(
-//                (observable, oldvalue, newvalue)
-//                -> vBoxMain.setHeight((Double) newvalue / 2)
-//        );
-
+    @FXML
+    private void ChangeCalendar(MouseEvent event) {
+        if(calendarView.getCalendar()!=null)
+        {
+       //data.getPartialResults().filtered(predicate ->);
+        }
     }
-
 }
+
