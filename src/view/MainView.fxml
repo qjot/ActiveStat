@@ -5,6 +5,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollBar?>
@@ -25,9 +26,13 @@
     <children>
       <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" prefHeight="58.0" prefWidth="427.0" progress="0.0" />
-            <Label prefHeight="34.0" prefWidth="113.0" style="-fx-text-fill: black;" text="Label" translateX="100.0" translateY="-20.0" />
-                        <CalendarPicker fx:id="calendarView" onMouseClicked="#ChangeCalendar" prefHeight="249.0" prefWidth="850.0" stylesheets="@CalendarPicker.css" />
+            <AnchorPane prefHeight="50.0" prefWidth="850.0">
+               <children>
+                  <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" layoutX="183.0" layoutY="5.0" prefHeight="67.0" prefWidth="485.0" progress="0.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
+                  <Button mnemonicParsing="false" prefHeight="67.0" prefWidth="99.0" text="Button" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+                        <CalendarPicker fx:id="calendarView" onMouseClicked="#ChangeCalendar" prefHeight="269.0" prefWidth="850.0" stylesheets="@CalendarPicker.css" />
               <TabPane prefHeight="568.0" prefWidth="716.0" tabClosingPolicy="UNAVAILABLE">
                   <tabs>
                       <Tab text="Training">

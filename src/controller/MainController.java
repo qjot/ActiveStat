@@ -147,6 +147,7 @@ public class MainController implements Initializable {
     }
 
     private void changeWiew(TrackData trackData) {
+        
         ChangeText(trackData);
         ChangeCharts(trackData);
 

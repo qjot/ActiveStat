@@ -181,8 +181,8 @@
 	-fx-background-color:   
         linear-gradient(#a9ff00,#f0ff35),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
-    -fx-background-radius: 50, 30,0,0;
-    -fx-background-insets: 0, 1;
+     -fx-border-radius: 70 70 0 0;
+    -fx-background-radius:  80 80 0 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
 }
