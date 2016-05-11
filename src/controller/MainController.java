@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -97,8 +98,9 @@ public class MainController implements Initializable {
     private void load(ActionEvent event) throws InterruptedException {
         FileChooser fileChooser = new FileChooser();
         List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(loadButton.getScene().getWindow());
-
-        data = new FileParserRunner(trackDataFileList, calendarView.highlightedCalendars());
+        ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
+        ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
+        data = new FileParserRunner(trackDataFileList,CalendarRunningDates, CalendarSelectedDate);
         data.start();
        
     }

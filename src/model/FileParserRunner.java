@@ -34,6 +34,7 @@ import jgpx.model.jaxb.TrackPointExtensionT;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javafx.beans.property.ObjectProperty;
 
 /**
  *
@@ -43,15 +44,18 @@ public class FileParserRunner extends Thread {
 
     //List<FileParser> threads;
     // List<TrackData> trackDataList;
-    ObservableList<Calendar> highlightedCalendars;
+   
+    private ObservableList<Calendar> highlightedCalendars;
     private final List<File> trackDataFileList;
+    private ObjectProperty<Calendar> CalendarSelectedDate;
     private final ReadOnlyObjectWrapper<ObservableList<TrackData>> partialResults
             = new ReadOnlyObjectWrapper<>(this, "partialResults",
                     FXCollections.observableArrayList(new ArrayList()));
 
-    public FileParserRunner(List<File> trackDataFileList, ObservableList<Calendar> highlightedCalendars) {
+    public FileParserRunner(List<File> trackDataFileList, ObservableList<Calendar> highlightedCalendars, ObjectProperty<Calendar> CalendarSelectedDate) {
         this.trackDataFileList = trackDataFileList;
         this.highlightedCalendars = highlightedCalendars;
+        this.CalendarSelectedDate = CalendarSelectedDate;
     }
 
     public final ObservableList<TrackData> getPartialResults() {
@@ -66,7 +70,8 @@ public class FileParserRunner extends Thread {
     public void run() {
         int iterations = 0;
         int max = trackDataFileList.size();
-         highlightedCalendars.clear();
+        highlightedCalendars.clear();
+        System.out.println(CalendarSelectedDate);
         for (File track : trackDataFileList) {
             try {
                 iterations++;
@@ -83,11 +88,21 @@ public class FileParserRunner extends Thread {
                     LocalDateTime localdate = dat.getStartTime();
                     Date d = Date.from(localdate.toInstant(ZoneOffset.UTC));
                     Calendar cal = new GregorianCalendar();
+                    LocalDateTime tempDate = dat.getStartTime();
+                    Calendar cal2 = new GregorianCalendar(tempDate.getYear(),tempDate.getMonthValue(),tempDate.getDayOfMonth());
                     cal.setTime(d);
                     Platform.runLater(() -> {
                         partialResults.get().add(dat);
-                        highlightedCalendars.add(cal);
+                        highlightedCalendars.add(cal2);
+                        
                     });
+
+                    if (iterations == 1) {
+                        Platform.runLater(() -> {
+                            CalendarSelectedDate.set(cal2);
+                            System.out.println(CalendarSelectedDate);
+                        });
+                    }
 //                    // initializeCharts(trackData);
                     //  label.setText("GPX successfully loaded");
                 } else {
