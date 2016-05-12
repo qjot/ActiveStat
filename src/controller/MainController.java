@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.File;
+import static java.lang.Math.round;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +35,8 @@ import jgpx.model.analysis.TrackData;
 import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  *
@@ -53,7 +56,7 @@ public class MainController implements Initializable {
     @FXML private Label avgHeartRate;
     @FXML private Label maxPedalingRateLabel;
     @FXML private Label avgPedalingRateLabel;
-    @FXML private LineChart<String, Number> hightDistanceLine;
+    @FXML private LineChart<String, Number> lineChart;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
     @FXML private CalendarPicker calendarView;
@@ -97,7 +100,7 @@ public class MainController implements Initializable {
 
     private void changeWiew(TrackData trackData) {
         ChangeText(trackData);
-        //ChangeCharts(trackData);
+        ChangeCharts(trackData);
     }
 
     private void ChangeText(TrackData trackData) {
@@ -116,17 +119,23 @@ public class MainController implements Initializable {
     }
 
     private void ChangeCharts(TrackData trackData) {
-
+        
+         System.out.println(trackData.getNumPoints());
+         
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
         XYChart.Series<String, Number> seriesAreaHD = new XYChart.Series();
         ObservableList<Chunk> chunks = trackData.getChunks();
-
-        for (Chunk point : chunks) {
-            seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
+        System.out.println( chunks.size());
+        System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
+       double distance=0;
+        for (int i=0;i<=chunks.size();i+=chunks.size()/100) {
+            distance+=chunks.get(i).getDistance();
+            seriesLine.getData().add(new XYChart.Data<>(String.valueOf(round(distance)), round(chunks.get(i).getSpeed())));
         }
-        hightDistanceLine.getData().add(seriesLine);
+       
+        lineChart.getData().add(seriesLine);
         //.getData().add(ChartsData.GetStringNumberSerie());
 
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));
