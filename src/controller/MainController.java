@@ -6,12 +6,15 @@
 package controller;
 
 import java.io.File;
+import static java.lang.Math.round;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +35,9 @@ import jgpx.model.analysis.Chunk;
 import jgpx.model.analysis.TrackData;
 import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
+import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  *
@@ -39,66 +45,30 @@ import model.FileParserRunner;
  */
 public class MainController implements Initializable {
 
-    @FXML
-    private Label dateLabel;
-    @FXML
-    private Label durationLabel;
-    @FXML
-    private Label exerciseTimeLabel;
-    @FXML
-    private Label distanceLabel;
-    @FXML
-    private Label slopeLabel;
-    @FXML
-    private Label avgSpeedLabel;
-    @FXML
-    private Label maxSpeedLabel;
-    @FXML
-    private Label maxHeartRate;
-    @FXML
-    private Label minHeartRate;
-    @FXML
-    private Label avgHeartRate;
-    @FXML
-    private Label maxPedalingRateLabel;
-    @FXML
-    private Label avgPedalingRateLabel;
+    @FXML private Label dateLabel;
+    @FXML private Label durationLabel;
+    @FXML private Label exerciseTimeLabel;
+    @FXML private Label distanceLabel;
+    @FXML private Label slopeLabel;
+    @FXML private Label avgSpeedLabel;
+    @FXML private Label maxSpeedLabel;
+    @FXML private Label maxHeartRate;
+    @FXML private Label minHeartRate;
+    @FXML private Label avgHeartRate;
+    @FXML private Label maxPedalingRateLabel;
+    @FXML private Label avgPedalingRateLabel;
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private CalendarPicker calendarView;
+    @FXML private GridPane statsGrid;
+    @FXML private ScrollBar scrollBar;
+    @FXML private VBox vBoxMain;
+    @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
-    @FXML
-    private LineChart<String, Number> hightDistanceLine;
-
-    @FXML
-    private CategoryAxis xAxis;
-    @FXML
-    private NumberAxis yAxis;
-    private ObservableList<TrackData> partialResults;
-    @FXML
-    private CalendarPicker calendarView;
-    @FXML
-    private GridPane statsGrid;
-    @FXML
-    private ScrollBar scrollBar;
-    @FXML
-    private VBox vBoxMain;
-    @FXML
-    private ProgressBar progressBarLoad;
-    FileParserRunner data;
-
-    @FXML
-    private void load(MouseEvent event) {
-
-        FileChooser fileChooser = new FileChooser();
-        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(vBoxMain.getScene().getWindow());
-        if (trackDataFileList != null) {
-            ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
-            ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
-
-            data = new FileParserRunner(trackDataFileList, CalendarRunningDates, CalendarSelectedDate);
-            data.setDaemon(false);
-            progressBarLoad.progressProperty().bind(data.ProgressProperty());
-            data.start();
-        }
-    }
+    
+    FileParserRunner runningFileLoader;
+    private final ObservableList<TrackData> trackDatabase= observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,16 +79,32 @@ public class MainController implements Initializable {
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
-                changeWiew(data.partialResultsProperty().get().get(dateId));
+                changeWiew(trackDatabase.get(dateId));
             }
         });
         exitButton.disableProperty().set(true);
     }
+      @FXML
+    private void load(MouseEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        List<File> trackDataFileList = fileChooser.showOpenMultipleDialog(vBoxMain.getScene().getWindow());
+        if (trackDataFileList != null) {
+            ObservableList<Calendar> CalendarRunningDates = calendarView.highlightedCalendars();
+            ObjectProperty<Calendar> CalendarSelectedDate = calendarView.calendarProperty();
+
+            runningFileLoader = new FileParserRunner(trackDatabase, trackDataFileList, CalendarRunningDates, CalendarSelectedDate);
+            runningFileLoader.setDaemon(false);
+            progressBarLoad.progressProperty().bind(runningFileLoader.ProgressProperty());
+            runningFileLoader.start();
+        }
+    }
+
 
     private void changeWiew(TrackData trackData) {
         
         ChangeText(trackData);
-        //ChangeCharts(trackData);
+        ChangeCharts(trackData);
     }
 
     private void ChangeText(TrackData trackData) {
@@ -137,17 +123,23 @@ public class MainController implements Initializable {
     }
 
     private void ChangeCharts(TrackData trackData) {
-
+        
+         System.out.println(trackData.getNumPoints());
+         
         xAxis.setLabel("Ranges");
         yAxis.setLabel("Frequencies");
         XYChart.Series<String, Number> seriesLine = new XYChart.Series();
         XYChart.Series<String, Number> seriesAreaHD = new XYChart.Series();
         ObservableList<Chunk> chunks = trackData.getChunks();
-
-        for (Chunk point : chunks) {
-            seriesLine.getData().add(new XYChart.Data<>(String.valueOf(point.getDistance()), point.getSpeed()));
+        System.out.println( chunks.size());
+        System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
+       double distance=0;
+        for (int i=0;i<=chunks.size();i+=chunks.size()/100) {
+            distance+=chunks.get(i).getDistance();
+            seriesLine.getData().add(new XYChart.Data<>(String.valueOf(round(distance)), round(chunks.get(i).getSpeed())));
         }
-        hightDistanceLine.getData().add(seriesLine);
+       
+        lineChart.getData().add(seriesLine);
         //.getData().add(ChartsData.GetStringNumberSerie());
 
 //        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));

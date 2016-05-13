@@ -203,7 +203,7 @@
                                        </content>
                                     </TitledPane>
                                                 <Label prefHeight="43.0" prefWidth="796.0" styleClass="optionLabel" text="Analysis" />
-                                                <LineChart>
+                                                <LineChart fx:id="lineChart">
                                                     <xAxis>
                                                         <CategoryAxis side="BOTTOM" />
                                                     </xAxis>

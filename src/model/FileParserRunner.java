@@ -7,12 +7,9 @@ package model;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -35,64 +32,67 @@ import javafx.beans.property.SimpleDoubleProperty;
  */
 public class FileParserRunner extends Thread {
 
-    private final ObservableList<Calendar> highlightedCalendars;
+    private final ObservableList<Calendar> runningDates;
     private final List<File> trackDataFileList;
-    private final DoubleProperty progress;
-    private final ObjectProperty<Calendar> CalendarSelectedDate;
-    private final ReadOnlyObjectWrapper<ObservableList<TrackData>> partialResults
-            = new ReadOnlyObjectWrapper<>(this, "partialResults",
-                    FXCollections.observableArrayList(new ArrayList()));
+    private final DoubleProperty loadingProgress;
+    private final ObjectProperty<Calendar> selectedDate;
+    private final ObservableList<TrackData> trackDatabase;
+//    private final ReadOnlyObjectWrapper<ObservableList<TrackData>> partialResults
+//            = new ReadOnlyObjectWrapper<>(this, "partialResults",
+//                    FXCollections.observableArrayList(new ArrayList()));
 
-    public FileParserRunner(List<File> trackDataFileList,
-            ObservableList<Calendar> highlightedCalendars,
+    public FileParserRunner(ObservableList<TrackData> trackDataFiles,
+            List<File> trackDataFileList,
+            ObservableList<Calendar> runningDates,
             ObjectProperty<Calendar> CalendarSelectedDate
     ) {
         this.trackDataFileList = trackDataFileList;
-        this.highlightedCalendars = highlightedCalendars;
-        this.CalendarSelectedDate = CalendarSelectedDate;
-        progress = new SimpleDoubleProperty(0.01F);
-
-    }
-
-    public final ObservableList<TrackData> getPartialResults() {
-        return (ObservableList<TrackData>) partialResults;
+        this.runningDates = runningDates;
+        this.selectedDate = CalendarSelectedDate;
+        loadingProgress = new SimpleDoubleProperty(0.01F);
+        this.trackDatabase = trackDataFiles;
     }
 
     public final ReadOnlyObjectProperty<ObservableList<TrackData>> partialResultsProperty() {
-        return partialResults.getReadOnlyProperty();
+        return (ReadOnlyObjectProperty<ObservableList<TrackData>>) trackDatabase;
     }
 
     public final ReadOnlyDoubleProperty ProgressProperty() {
-        return progress;
+        return loadingProgress;
     }
 
     @Override
     public void run() {
-        int iterations = 0;
-        int max = trackDataFileList.size();
-        highlightedCalendars.clear();
-        System.out.println(CalendarSelectedDate);
+        int workDone = 0;
+        int totalWork = trackDataFileList.size();
+        boolean firstDateSetted = false;
         for (File track : trackDataFileList) {
             try {
-                iterations++;
+                workDone++;
                 JAXBContext jaxbContext = JAXBContext.newInstance(GpxType.class, TrackPointExtensionT.class);
                 Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
                 JAXBElement<Object> root = (JAXBElement<Object>) unmarshaller.unmarshal(track);
                 GpxType gpx = (GpxType) root.getValue();
 
                 if (gpx != null) {
-                    progress.set((float) iterations / max);
-                    TrackData dat = new TrackData(new Track(gpx.getTrk().get(0)));
-                    LocalDateTime tempDate = dat.getStartTime();
-                    Calendar cal2 = new GregorianCalendar(tempDate.getYear(), tempDate.getMonthValue(), tempDate.getDayOfMonth());
+                    loadingProgress.set((float) workDone / totalWork);
+                    TrackData trackToLoad = new TrackData(new Track(gpx.getTrk().get(0)));
+                    LocalDateTime tempDate = trackToLoad.getStartTime();
+                    Calendar currentRunningDate = new GregorianCalendar(tempDate.getYear(),
+                            tempDate.getMonthValue()-1,
+                            tempDate.getDayOfMonth());
                     Platform.runLater(() -> {
-                        partialResults.get().add(dat);
-                        highlightedCalendars.add(cal2);
+                        if (!trackDatabase.contains(trackToLoad)) {
+                            trackDatabase.add(trackToLoad);
+                            runningDates.add(currentRunningDate);
+                        }
                     });
-                    if (iterations == 1) {
+
+                    if (!firstDateSetted) {
                         Platform.runLater(() -> {
-                            CalendarSelectedDate.set(cal2);
+                            selectedDate.set(currentRunningDate);
                         });
+                        firstDateSetted = true;
                     }
 
                 } else {
