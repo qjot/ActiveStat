@@ -40,6 +40,7 @@ public class FileParser extends Thread {
               Platform.runLater(new Runnable() {
             @Override public void run() {
                 data=new TrackData(new Track(gpx.getTrk().get(0)));
+                 
             }
         });
           } else {
