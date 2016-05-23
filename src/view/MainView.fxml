@@ -5,8 +5,10 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -197,9 +199,9 @@
                                        </content>
                                     </TitledPane>
                                                 <Label prefHeight="43.0" prefWidth="796.0" styleClass="optionLabel" text="Analysis" />
-                                                <LineChart fx:id="lineChart">
+                                                <LineChart fx:id="lineChart" createSymbols="false" titleSide="BOTTOM">
                                                     <xAxis>
-                                                        <CategoryAxis side="BOTTOM" />
+                                                        <NumberAxis side="BOTTOM" />
                                                     </xAxis>
                                                     <yAxis>
                                                         <NumberAxis side="LEFT" />
@@ -212,11 +214,11 @@
                                 </AnchorPane>
                           </content>
                       </Tab>
-                      <Tab disable="true" styleClass="monthTab" text="Month Summary">
+                      <Tab styleClass="monthTab" text="Month Summary">
                           <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="423.0" prefWidth="533.0">
                                   <children>
-                                      <LineChart fx:id="hightDistanceLine" layoutX="44.0" layoutY="24.0" prefHeight="358.0" prefWidth="446.0">
+                                      <LineChart fx:id="hightDistanceLine" layoutX="44.0" layoutY="44.0" prefHeight="452.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="44.0">
                                           <xAxis>
                                               <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                                           </xAxis>
@@ -224,6 +226,10 @@
                                               <NumberAxis fx:id="yAxis" side="LEFT" />
                                           </yAxis>
                                       </LineChart>
+                              <CheckBox fx:id="heartRate" layoutX="61.0" layoutY="14.0" mnemonicParsing="false" text="Heart rate" />
+                              <CheckBox fx:id="pedalingRate" layoutX="170.0" layoutY="14.0" mnemonicParsing="false" text="Pedaling rate" />
+                              <CheckBox fx:id="speed" layoutX="279.0" layoutY="14.0" mnemonicParsing="false" text="speed" />
+                              <ProgressIndicator fx:id="chartProgress" layoutX="299.0" layoutY="160.0" prefHeight="126.0" prefWidth="144.0" progress="0.0" />
                                   </children>
                               </AnchorPane>
                           </content>
