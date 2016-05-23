@@ -59,12 +59,11 @@ public class MainController implements Initializable {
     @FXML private Label avgHeartRate;
     @FXML private Label maxPedalingRateLabel;
     @FXML private Label avgPedalingRateLabel;
-    @FXML private LineChart<String, Number> lineChart;
+    @FXML private LineChart<Number, Number> lineChart;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
     @FXML private CalendarPicker calendarView;
     @FXML private GridPane statsGrid;
-    @FXML private ScrollBar scrollBar;
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
@@ -78,10 +77,7 @@ public class MainController implements Initializable {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        scrollBar.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            scrollableContent.setLayoutY(-new_val.doubleValue());
-        });
-
+ 
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
@@ -106,7 +102,6 @@ public class MainController implements Initializable {
         }
     }
 
-
     private void changeWiew(TrackData trackData) {
         
         ChangeText(trackData);
@@ -129,37 +124,58 @@ public class MainController implements Initializable {
     }
 
     private void ChangeCharts(TrackData trackData) {
-        
-         System.out.println(trackData.getNumPoints());
-         
-        xAxis.setLabel("Ranges");
-        yAxis.setLabel("Frequencies");
-        XYChart.Series<String, Number> seriesLine = new XYChart.Series();
-        XYChart.Series<String, Number> seriesAreaHD = new XYChart.Series();
-        ObservableList<Chunk> chunks = trackData.getChunks();
-        System.out.println( chunks.size());
-        System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
-       double distance=0;
-        for (int i=0;i<=chunks.size();i+=chunks.size()/100) {
-            distance+=chunks.get(i).getDistance();
-            seriesLine.getData().add(new XYChart.Data<>(String.valueOf(round(distance)), round(chunks.get(i).getSpeed())));
-        }
-       
-        lineChart.getData().add(seriesLine);
-        //.getData().add(ChartsData.GetStringNumberSerie());
 
-//        text.setText("Start time: " + DateTimeUtils.format(trackData.getStartTime()));
-//        text.appendText("\nEnd time: " + DateTimeUtils.format(trackData.getEndTime()));
-//        text.appendText(String.format("\nTotal Distance: %.0f m", trackData.getTotalDistance()));
-//        text.appendText("\nDuration: " + DateTimeUtils.format(trackData.getTotalDuration()));
-//        text.appendText("\nMoving time: " + DateTimeUtils.format(trackData.getMovingTime()));
-//        text.appendText(String.format("\nAverage Speed: %.2f m/s", trackData.getAverageSpeed()));
-//        text.appendText(String.format("\nAverage Cadence: %d", trackData.getAverageCadence()));
-//        text.appendText(String.format("\nAverage Heartrate: %d bpm", trackData.getAverageHeartrate()));
-//        text.appendText(String.format("\nTotal ascent: %.2f m", trackData.getTotalAscent()));
-//        text.appendText(String.format("\nTotal descend: %.2f m", trackData.getTotalDescend()));
-//
-//        text.appendText("\nTrack containing " + chunks.size() + " points");
+        System.out.println(trackData.getNumPoints());
+
+        xAxis.setLabel("Distance");
+
+        yAxis.setLabel("Frequencies");
+        ObservableList<Chunk> chunks = trackData.getChunks();
+        //System.out.println( chunks.size());
+        //System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
+
+        double distance = 0;
+        XYChart.Series<Number, Number> speed = new XYChart.Series();
+        XYChart.Series<Number, Number> heartRate = new XYChart.Series();
+        XYChart.Series<Number, Number> pedalingRate = new XYChart.Series();
+        XYChart.Series<Number, Number> height = new XYChart.Series<>();
+        speed.setName("Speed");
+        heartRate.setName("Heart rate");
+        pedalingRate.setName("Pedaling rate");
+        height.setName("height");
+        double[] mean1 = new double[3];
+        double[] mean2 = new double[3];
+        double[] mean3 = new double[3];
+        double currentHeight = chunks.get(0).getAscent();
+        double currentDesc = chunks.get(0).getDescend();
+        for (int i = 0; i < chunks.size(); i++) {
+            currentHeight += chunks.get(i).getAscent() - chunks.get(i).getDescend();
+            distance += chunks.get(i).getDistance();
+            mean3[0] += chunks.get(i).getSpeed();
+            mean3[1] += chunks.get(i).getAvgCadence();
+            int size = round(chunks.size()/500);
+            if (i % size == 0) {
+                height.getData().add(new XYChart.Data<>(distance / 1000, currentHeight));
+                mean3[0] /= size;
+                mean2[0] = (mean1[0] + mean2[0] + mean3[0]) / 3;
+                mean3[1] /= size;
+                mean2[1] = (mean1[1] + mean2[1] + mean3[1]) / 3;
+                speed.getData().add(new XYChart.Data<>((distance - chunks.get(i).getDistance()) / 1000, mean2[0]));
+                pedalingRate.getData().add(new XYChart.Data<>((distance - chunks.get(i).getDistance()) / 1000, mean2[1]));
+                heartRate.getData().add(new XYChart.Data<>(distance / 1000, chunks.get(i).getAvgHeartRate()));
+                mean1 = mean2;
+                mean2 = mean3;
+                mean3[0] = 0;
+                mean3[1] = 0;
+            }
+        }
+        lineChart.getData().clear();
+        lineChart.getData().add(speed);
+        lineChart.getData().add(pedalingRate);
+        lineChart.getData().add(heartRate);
+        
+
+
     }
 
 }
