@@ -29,10 +29,10 @@
 
 .tab{
     -fx-min-width: 300pt;
-    -fx-min-height: 50pt;
+    -fx-min-height: 30pt;
     -fx-max-width: 1500pt; 
     -fx-pref-width: 250pt;
-    -fx-pref-height:50pt;
+    -fx-pref-height:30pt;
     -fx-font-size: 13pt;
      -fx-alignment: CENTER;
      -fx-border-radius: 10 10 0 0;

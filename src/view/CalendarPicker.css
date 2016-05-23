@@ -16,7 +16,7 @@ and open the template in the editor.
     -fx-background-size:25 ,20;
     -fx-background-position: 80%;
     -fx-font-size: 10pt;
-    -fx-min-height:40;
+    -fx-min-height:20;
   
     /*-fx-background-color: radial-gradient(center 50% 50%, radius 80%, #99ff00 40%, #ffffff 60%);*/
 }
