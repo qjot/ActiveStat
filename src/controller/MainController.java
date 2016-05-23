@@ -67,6 +67,12 @@ public class MainController implements Initializable {
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
+    
+        XYChart.Series<Number, Number> speed;
+        XYChart.Series<Number, Number> heartRate;
+        XYChart.Series<Number, Number> pedalingRate;
+        XYChart.Series<Number, Number> height;
+    
     @FXML private AnchorPane scrollableContent;
     @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
@@ -135,10 +141,10 @@ public class MainController implements Initializable {
         //System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
 
         double distance = 0;
-        XYChart.Series<Number, Number> speed = new XYChart.Series();
-        XYChart.Series<Number, Number> heartRate = new XYChart.Series();
-        XYChart.Series<Number, Number> pedalingRate = new XYChart.Series();
-        XYChart.Series<Number, Number> height = new XYChart.Series<>();
+        speed = new XYChart.Series();
+        heartRate = new XYChart.Series();
+        pedalingRate = new XYChart.Series();
+        height = new XYChart.Series<>();
         speed.setName("Speed");
         heartRate.setName("Heart rate");
         pedalingRate.setName("Pedaling rate");
@@ -173,9 +179,6 @@ public class MainController implements Initializable {
         lineChart.getData().add(speed);
         lineChart.getData().add(pedalingRate);
         lineChart.getData().add(heartRate);
-        
-
-
     }
 
 }
