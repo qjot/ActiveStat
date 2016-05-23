@@ -38,6 +38,8 @@ import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -66,14 +68,18 @@ public class MainController implements Initializable {
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
-    
+    @FXML private AnchorPane scrollableContent;
+    @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+
         scrollBar.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            vBoxMain.setLayoutY(-new_val.doubleValue());
+            scrollableContent.setLayoutY(-new_val.doubleValue());
         });
 
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
