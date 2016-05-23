@@ -231,9 +231,7 @@
                                               <NumberAxis fx:id="yAxis" side="LEFT" />
                                           </yAxis>
                                       </LineChart>
-                              <CheckBox fx:id="heartRate" layoutX="61.0" layoutY="14.0" mnemonicParsing="false" text="Heart rate" />
-                              <CheckBox fx:id="pedalingRate" layoutX="170.0" layoutY="14.0" mnemonicParsing="false" text="Pedaling rate" />
-                              <CheckBox fx:id="speed" layoutX="279.0" layoutY="14.0" mnemonicParsing="false" text="speed" />
+                              
                               <ProgressIndicator fx:id="chartProgress" layoutX="299.0" layoutY="160.0" prefHeight="126.0" prefWidth="144.0" progress="0.0" />
                                   </children>
                               </AnchorPane>

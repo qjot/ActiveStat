@@ -151,11 +151,12 @@ public class MainController implements Initializable {
             distance += chunks.get(i).getDistance();
             mean3[0] += chunks.get(i).getSpeed();
             mean3[1] += chunks.get(i).getAvgCadence();
-            if (i % 15 == 0) {
+            int size = round(chunks.size()/500);
+            if (i % size == 0) {
                 height.getData().add(new XYChart.Data<>(distance / 1000, currentHeight));
-                mean3[0] /= 15;
+                mean3[0] /= size;
                 mean2[0] = (mean1[0] + mean2[0] + mean3[0]) / 3;
-                mean3[1] /= 15;
+                mean3[1] /= size;
                 mean2[1] = (mean1[1] + mean2[1] + mean3[1]) / 3;
                 speed.getData().add(new XYChart.Data<>((distance - chunks.get(i).getDistance()) / 1000, mean2[0]));
                 pedalingRate.getData().add(new XYChart.Data<>((distance - chunks.get(i).getDistance()) / 1000, mean2[1]));
