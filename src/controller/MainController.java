@@ -38,6 +38,8 @@ import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -62,7 +64,6 @@ public class MainController implements Initializable {
     @FXML private NumberAxis yAxis;
     @FXML private CalendarPicker calendarView;
     @FXML private GridPane statsGrid;
-    @FXML private ScrollBar scrollBar;
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
@@ -72,15 +73,17 @@ public class MainController implements Initializable {
         XYChart.Series<Number, Number> pedalingRate;
         XYChart.Series<Number, Number> height;
     
+    @FXML private AnchorPane scrollableContent;
+    @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        scrollBar.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            vBoxMain.setLayoutY(-new_val.doubleValue());
-        });
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
 
+ 
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
