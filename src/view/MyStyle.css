@@ -181,20 +181,15 @@
 	-fx-background-color:   
         linear-gradient(#a9ff00,#f0ff35),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
-    -fx-background-radius: 50, 30,0,0;
-    -fx-background-insets: 0, 1;
+     -fx-border-radius: 0 0 0 0;
+    -fx-background-radius:  0 0 0 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
 }
 
 .progress-bar > .bar{
-/*	-fx-background-color:   
-        linear-gradient(#a9ff00,#f0ff35),
-        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);*/
-    -fx-background-radius: 50, 30,0,0;
-    -fx-background-insets: 0, 1;
-/*    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
-    -fx-text-fill: #395306;*/
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius:  0 0 0 0;
 }
 .button-style, .progressBar{
 	-fx-background-color:
@@ -202,6 +197,41 @@
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
     -fx-background-radius: 50, 30,0,0;
     -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+}
+.exit-button{
+    -fx-background-color:
+        linear-gradient(#ff3300,#ff0000),
+        radial-gradient(center 50% -40%, radius 200%, #ff9999 45%, #cc0000 50%);
+    -fx-border-radius: 0 0 0 70;
+    /*-fx-background-radius:  0 0 0 70;*/
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #ffffff;
+    -fx-font-size : 15pt;
+    -fx-font-weight: bold;
+    -fx-focus-color: null;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    
+    
+}
+.exit-button:focus  {
+    -fx-focus-color: transparent;
+    -fx-border-radius: 0 0 0 70;
+    -fx-background-radius:  0 0 0 70;
+}
+
+.exit-button:focused  {
+    -fx-focus-color: transparent;
+    -fx-border-radius: 0 0 0 70;
+    -fx-background-radius:  0 0 0 70;
+}
+.clear-button{
+    -fx-background-color:
+        linear-gradient(#ff3300,#ff0000),
+        radial-gradient(center 50% -40%, radius 200%, #ffcc00 45%, #80c800 50%);
+    -fx-border-radius: 0 0 70 0;
+    -fx-background-radius:  0 0 70 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
 }

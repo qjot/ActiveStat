@@ -22,6 +22,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollBar;
@@ -64,6 +65,7 @@ public class MainController implements Initializable {
     @FXML private ScrollBar scrollBar;
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
+    @FXML private Button exitButton;
     
     FileParserRunner runningFileLoader;
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
@@ -80,6 +82,7 @@ public class MainController implements Initializable {
                 changeWiew(trackDatabase.get(dateId));
             }
         });
+        exitButton.disableProperty().set(true);
     }
       @FXML
     private void load(MouseEvent event) {
@@ -98,6 +101,7 @@ public class MainController implements Initializable {
     }
 
     private void changeWiew(TrackData trackData) {
+        
         ChangeText(trackData);
         ChangeCharts(trackData);
     }
