@@ -32,7 +32,7 @@
     -fx-min-height: 30pt;
     -fx-max-width: 1500pt; 
     -fx-pref-width: 250pt;
-    -fx-pref-height:30pt;
+    -fx-pref-height:0pt;
     -fx-font-size: 13pt;
      -fx-alignment: CENTER;
      -fx-border-radius: 10 10 0 0;
@@ -218,20 +218,15 @@
 .exit-button:focus  {
     -fx-focus-color: transparent;
     -fx-border-radius: 0 0 0 70;
-    -fx-background-radius:  0 0 0 70;
+    /*-fx-background-radius:  0 0 0 70;*/
 }
 
-.exit-button:focused  {
-    -fx-focus-color: transparent;
-    -fx-border-radius: 0 0 0 70;
-    -fx-background-radius:  0 0 0 70;
-}
 .clear-button{
     -fx-background-color:
         linear-gradient(#ff3300,#ff0000),
         radial-gradient(center 50% -40%, radius 200%, #ffcc00 45%, #80c800 50%);
-    -fx-border-radius: 0 0 70 0;
-    -fx-background-radius:  0 0 70 0;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius:  0 0 0 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
 }
@@ -255,12 +250,21 @@
     -fx-min-height:18;
 
 }
-.sliderButtonMenu >.titled-pane > .title {
-    -fx-background-color: null;
-    -fx-font-size: 14px;
-    -fx-pref-height:40;
-    -fx-max-height:50;
-    -fx-min-height:18;
+.titled-pane > .title {
+            -fx-min-width: 300pt;
+    -fx-min-height: 25pt;
+    -fx-max-width: 1500pt; 
+    -fx-pref-width: 250pt;
+    -fx-pref-height:25pt;
+    -fx-font-size: 13pt;
+     -fx-alignment: CENTER;
+     -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 16 16 16 16;
+    -fx-background-color:
+        linear-gradient(#f0ff35, #a9ff00),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
 }
 .sliderButtonMenu >.titled-pane > *.content {
     -fx-background-color:

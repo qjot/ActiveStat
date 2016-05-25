@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -25,7 +26,7 @@
 <?import jfxtras.scene.layout.HBox?>
 <?import jfxtras.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" minHeight="500.0" minWidth="820.0" prefHeight="1481.0" prefWidth="850.0" stylesheets="@MyStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="820.0" prefHeight="600.0" prefWidth="850.0" stylesheets="@MyStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
       <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -44,23 +45,17 @@
                   <Font size="22.0" />
                </font>
             </TitledPane>
-              <TabPane prefHeight="1128.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
+              <TabPane minHeight="-Infinity" prefHeight="362.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
                   <tabs>
                       <Tab text="Training">
                           <content>
-                        <ScrollPane fx:id="scrollPane">
+                        <ScrollPane fx:id="scrollPane" maxHeight="-Infinity" prefHeight="313.0" prefWidth="850.0">
                            <content>
-                                      <AnchorPane fx:id="scrollableContent" maxHeight="-Infinity" prefHeight="1048.0" prefWidth="850.0">
-                                          <children>
-                                              <VBox fx:id="vBoxMain" prefHeight="906.0" prefWidth="817.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <children>
-                                                      <Label fx:id="dateLabel" prefHeight="34.0" prefWidth="820.0" styleClass="optionLabel" text="Date">
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                          </Label>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <TitledPane alignment="CENTER" prefHeight="375.0" prefWidth="850.0" text="Date" textAlignment="CENTER">
+                                        <VBox fx:id="vBoxMain" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="848.0">
+                                            <children>
+                                    <AnchorPane minWidth="-Infinity" prefHeight="269.0" prefWidth="844.0">
+                                       <children>
+                                          <TitledPane alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="8.0" prefHeight="261.0" prefWidth="897.0" text="Date" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <content>
                                                             <GridPane fx:id="statsGrid" minHeight="-Infinity" prefHeight="220.0" prefWidth="820.0">
                                                                 <columnConstraints>
@@ -217,30 +212,49 @@
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
-                                             <graphic>
-                                                <HBox prefHeight="100.0" prefWidth="200.0" />
-                                             </graphic>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
                                           </TitledPane>
-                                                      <Label prefHeight="43.0" prefWidth="796.0" styleClass="optionLabel" text="Analysis" />
-                                          <HBox alignment="CENTER">
-                                             <children>
-                                                <CheckBox fx:id="speedBox" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
-                                                <CheckBox fx:id="heartBox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
-                                                <CheckBox fx:id="pedalingBox" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
-                                             </children>
-                                          </HBox>
-                                                      <LineChart fx:id="lineChart" createSymbols="false" minHeight="-Infinity" prefHeight="400.0" prefWidth="850.0">
-                                                          <xAxis>
-                                                              <NumberAxis side="BOTTOM" />
-                                                          </xAxis>
-                                                          <yAxis>
-                                                              <NumberAxis side="LEFT" />
-                                                          </yAxis>
-                                                      </LineChart>
-                                                  </children>
-                                              </VBox>
-                                          </children>
-                                      </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane>
+                                       <children>
+                                          <TitledPane layoutX="5.0" layoutY="4.0" minHeight="-Infinity" prefHeight="642.0" prefWidth="850.0" text="Charts" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <content>
+                                                <VBox prefHeight="683.0" prefWidth="848.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER">
+                                                         <children>
+                                                            <CheckBox fx:id="speedBox" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
+                                                            <CheckBox fx:id="heartBox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
+                                                            <CheckBox fx:id="pedalingBox" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
+                                                         </children>
+                                                      </HBox>
+                                                                  <LineChart fx:id="lineChart" createSymbols="false" minHeight="-Infinity" prefHeight="400.0" prefWidth="850.0">
+                                                                      <xAxis>
+                                                                          <NumberAxis side="BOTTOM" />
+                                                                      </xAxis>
+                                                                      <yAxis>
+                                                                          <NumberAxis side="LEFT" />
+                                                                      </yAxis>
+                                                                  </LineChart>
+                                                      <AreaChart prefHeight="370.0" prefWidth="828.0">
+                                                        <xAxis>
+                                                          <CategoryAxis side="BOTTOM" />
+                                                        </xAxis>
+                                                        <yAxis>
+                                                          <NumberAxis side="LEFT" />
+                                                        </yAxis>
+                                                      </AreaChart>
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </TitledPane>
+                                       </children>
+                                    </AnchorPane>
+                                            </children>
+                                        </VBox>
                            </content>
                         </ScrollPane>
                           </content>

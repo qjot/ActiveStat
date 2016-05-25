@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import jgpx.model.gpx.Bounds;
 
 /**
  *
@@ -82,7 +84,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-
+             
  
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
