@@ -179,8 +179,8 @@
 }
 .progress-bar > .track{
 	-fx-background-color:   
-        linear-gradient(#a9ff00,#f0ff35),
-        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+        linear-gradient(#ccff99,#ffff99),
+        radial-gradient(center 50% -40%, radius 200%, #ffffff 45%, #99ff33 50%);
      -fx-border-radius: 0 0 0 0;
     -fx-background-radius:  0 0 0 0;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
@@ -190,6 +190,9 @@
 .progress-bar > .bar{
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius:  0 0 0 0;
+    -fx-background-color:  
+     linear-gradient(#a9ff00,#f0ff35),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
 }
 .button-style, .progressBar{
 	-fx-background-color:
