@@ -114,7 +114,7 @@ public class MainController implements Initializable {
     @FXML
     private CheckBox pedalingBox;
     @FXML
-    private AreaChart<?, ?> hightAreaChart;
+    private AreaChart<Number, Number> hightAreaChart;
     @FXML
     private Slider maxHR;
     @FXML
@@ -290,6 +290,7 @@ public class MainController implements Initializable {
         lineChart.getData().add(speed);
         //lineChart.getData().add(pedalingRate);
         //lineChart.getData().add(heartRate);
+        hightAreaChart.getData().add(height);
     }
 
     private void CalculateMonth(){
@@ -348,44 +349,6 @@ public class MainController implements Initializable {
     }
     //int[] z1,z2,z3,z4,z5=0;
      //double[] zone = new double[5];
-    private void ReloadPieChart(ActionEvent event) {
-        int max = (int) maxHR.getValue();
-        for (Chunk t : currentTrack.getChunks()) {
-            if (t.getAvgHeartRate() >= 0.9 * max) {
-                zone[0]++;
-                continue;
-            }
-            if (t.getAvgHeartRate() >= 0.8 * max) {
-                zone[1]++;
-                continue;
-            }
-            if (t.getAvgHeartRate() >= 0.7 * max) {
-                zone[2]++;
-                continue;
-            }
-            if (t.getAvgHeartRate() >= 0.6 * max) {
-                zone[3]++;
-            } else {
-                zone[4]++;
-            }
-        }
-        for (double d : zone) {
-            d = d / currentTrack.getChunks().size();
-            System.out.println(d);
-        }
-        System.out.println(currentTrack.getChunks().size());
-        
-
-    
-    
-    ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data("Grapefruit", 13),
-                new PieChart.Data("Oranges", 25),
-                new PieChart.Data("Plums", 10),
-                new PieChart.Data("Pears", 22),
-                new PieChart.Data("Apples", 30));
-    }
-
+  
 }
 
