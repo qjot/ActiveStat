@@ -8,7 +8,6 @@ package controller;
 import java.io.File;
 import static java.lang.Math.round;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +25,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -37,8 +35,10 @@ import jgpx.model.analysis.TrackData;
 import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.collections.FXCollections.observableArrayList;
+import javafx.event.ActionEvent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import jgpx.model.gpx.Bounds;
@@ -62,23 +62,34 @@ public class MainController implements Initializable {
     @FXML private Label maxPedalingRateLabel;
     @FXML private Label avgPedalingRateLabel;
     @FXML private LineChart<Number, Number> lineChart;
-    @FXML private CategoryAxis xAxis;
-    @FXML private NumberAxis yAxis;
+    //@FXML private NumberAxis xAxis;
+    //@FXML private NumberAxis yAxis;
     @FXML private CalendarPicker calendarView;
     @FXML private GridPane statsGrid;
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
-    
-        XYChart.Series<Number, Number> speed;
-        XYChart.Series<Number, Number> heartRate;
-        XYChart.Series<Number, Number> pedalingRate;
-        XYChart.Series<Number, Number> height;
-    
     @FXML private AnchorPane scrollableContent;
+    @FXML private CheckBox speedBox;
+    @FXML private CheckBox heartRateBox;
+    @FXML private CheckBox pedalingRateBox;
     @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
+
+    XYChart.Series<String, Number> monthSpeed;
+    XYChart.Series<String, Number> monthDistance;
+    XYChart.Series<String, Number> monthTime;
+
+    XYChart.Series<Number, Number> speed;
+    XYChart.Series<Number, Number> heartRate;
+    XYChart.Series<Number, Number> pedalingRate;
+    XYChart.Series<Number, Number> height;
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
+    @FXML
+    private ProgressIndicator chartProgress;
+    @FXML
+    private BarChart<String, Number> MonthSummary;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,11 +120,12 @@ public class MainController implements Initializable {
             runningFileLoader.start();
         }
     }
-
+    
     private void changeWiew(TrackData trackData) {
         
         ChangeText(trackData);
         ChangeCharts(trackData);
+        CalculateMonth();
     }
 
     private void ChangeText(TrackData trackData) {
@@ -132,16 +144,12 @@ public class MainController implements Initializable {
     }
 
     private void ChangeCharts(TrackData trackData) {
-
-        System.out.println(trackData.getNumPoints());
-
-        xAxis.setLabel("Distance");
-
-        yAxis.setLabel("Frequencies");
+        speedBox.selectedProperty().set(true);
+        heartRateBox.selectedProperty().set(false);
+        pedalingRateBox.selectedProperty().set(false);
+        //xAxis.setLabel("Distance");
+        //yAxis.setLabel("Frequencies");
         ObservableList<Chunk> chunks = trackData.getChunks();
-        //System.out.println( chunks.size());
-        //System.out.println(chunks.get(1).getFirstPoint().elevationProperty());
-
         double distance = 0;
         speed = new XYChart.Series();
         heartRate = new XYChart.Series();
@@ -151,11 +159,11 @@ public class MainController implements Initializable {
         heartRate.setName("Heart rate");
         pedalingRate.setName("Pedaling rate");
         height.setName("height");
-        double[] mean1 = new double[3];
-        double[] mean2 = new double[3];
-        double[] mean3 = new double[3];
+        double[] mean1 = new double[2];
+        double[] mean2 = new double[2];
+        double[] mean3 = new double[2];
         double currentHeight = chunks.get(0).getAscent();
-        double currentDesc = chunks.get(0).getDescend();
+        //some creppy logic
         for (int i = 0; i < chunks.size(); i++) {
             currentHeight += chunks.get(i).getAscent() - chunks.get(i).getDescend();
             distance += chunks.get(i).getDistance();
@@ -179,8 +187,64 @@ public class MainController implements Initializable {
         }
         lineChart.getData().clear();
         lineChart.getData().add(speed);
-        lineChart.getData().add(pedalingRate);
-        lineChart.getData().add(heartRate);
+        //lineChart.getData().add(pedalingRate);
+        //lineChart.getData().add(heartRate);
+    }
+
+    private void CalculateMonth(){
+        int Month = calendarView.calendarProperty().get().getTime().getMonth()+1;
+        //System.out.println(Month);
+        monthSpeed = new XYChart.Series();
+        monthSpeed.setName("Average speed");
+        monthDistance = new XYChart.Series();
+        monthDistance.setName("Total Distance");
+        monthTime = new XYChart.Series();
+        monthTime.setName("Total Time");
+        for (TrackData t : trackDatabase) {
+            if (t.getStartTime().getMonth().getValue() == Month) {
+                monthSpeed.getData().add(new XYChart.Data<>(String.valueOf(t.getStartTime().getDayOfMonth()), t.getAverageSpeed()));
+                monthDistance.getData().add(new XYChart.Data<>(String.valueOf(t.getStartTime().getDayOfMonth()), t.getTotalDistance()));
+                monthTime.getData().add(new XYChart.Data<>(String.valueOf(t.getStartTime().getDayOfMonth()), t.getTotalDuration().toMinutes()));
+            }
+        }
+        
+        MonthSummary.getData().clear();
+        MonthSummary.getData().add(monthSpeed);
+        MonthSummary.getData().add(monthDistance);
+        MonthSummary.getData().add(monthTime);
+        
+    }
+    @FXML
+    private void SpeedChartData(ActionEvent event) {
+        if (lineChart.getData().contains(speed)) {
+            lineChart.getData().remove(speed);
+        } else {
+            lineChart.getData().add(speed);
+        }
+    }
+    @FXML
+    private void HeartChartData(ActionEvent event) {
+        if (lineChart.getData().contains(heartRate)) {
+            lineChart.getData().remove(heartRate);
+        } else {
+            lineChart.getData().add(heartRate);
+        }
+    }
+    @FXML
+    private void PedalingChartData(ActionEvent event) {
+
+        if (lineChart.getData().contains(pedalingRate)) {
+            lineChart.getData().remove(pedalingRate);
+        } else {
+            lineChart.getData().add(pedalingRate);
+            lineChart.animatedProperty().set(false);
+        }
+    }
+
+    @FXML
+    private void ClearCalendar(ActionEvent event) {
+        trackDatabase.clear();
+        calendarView.highlightedCalendars().clear();
     }
 
 }
