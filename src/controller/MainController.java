@@ -10,7 +10,9 @@ import static java.lang.Math.round;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -38,6 +40,8 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.chart.BarChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
@@ -75,6 +79,7 @@ public class MainController implements Initializable {
     @FXML private CheckBox heartRateBox;
     @FXML private CheckBox pedalingRateBox;
     @FXML ScrollPane scrollPane;
+    @FXML private Button closeButton;
     FileParserRunner runningFileLoader;
 
     XYChart.Series<String, Number> monthSpeed;
@@ -104,7 +109,21 @@ public class MainController implements Initializable {
                 changeWiew(trackDatabase.get(dateId));
             }
         });
-        exitButton.disableProperty().set(true);
+        //exitButton.disableProperty().set(true);
+        
+    }
+//    
+    @FXML private void closeApplication(MouseEvent event)
+    {
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Exit");
+                alert.setHeaderText("You have not any optional parts!");
+                alert.setContentText("Are You sure to?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {                    
+               // SaveConfiguration(configurationName);
+                }
+              Platform.exit();           
         
     }
       @FXML
@@ -127,7 +146,6 @@ public class MainController implements Initializable {
     
     private void changeWiew(TrackData trackData) {
        scrollableContent.getScene().setCursor(Cursor.WAIT);
-
         ChangeText(trackData);
         ChangeCharts(trackData);
         CalculateMonth();
@@ -135,7 +153,7 @@ public class MainController implements Initializable {
     }
 
     private void ChangeText(TrackData trackData) {
-        dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
+       // dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
         durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
