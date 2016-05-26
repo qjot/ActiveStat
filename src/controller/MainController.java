@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,13 +39,17 @@ import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import jgpx.model.gpx.Bounds;
@@ -72,16 +77,14 @@ public class MainController implements Initializable {
     //@FXML private NumberAxis xAxis;
     //@FXML private NumberAxis yAxis;
     @FXML private CalendarPicker calendarView;
-    @FXML private GridPane statsGrid;
     @FXML private VBox vBoxMain;
     @FXML private ProgressBar progressBarLoad;
     @FXML private Button exitButton;
-    @FXML private AnchorPane scrollableContent;
+    private AnchorPane scrollableContent;
     @FXML private CheckBox speedBox;
     @FXML private CheckBox heartBox;
     @FXML private CheckBox pedalingBox;
     @FXML ScrollPane scrollPane;
-    @FXML private Button closeButton;
     FileParserRunner runningFileLoader;
 
     XYChart.Series<String, Number> monthSpeed;
@@ -93,17 +96,31 @@ public class MainController implements Initializable {
     XYChart.Series<Number, Number> pedalingRate;
     XYChart.Series<Number, Number> height;
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
+    private TrackData currentTrack;
     @FXML
     private ProgressIndicator chartProgress;
     @FXML
     private BarChart<String, Number> MonthSummary;
-    
+    @FXML
+    private GridPane statsGrid1;
+
+    @FXML
+    private AreaChart<?, ?> hightAreaChart;
+    @FXML
+    private Slider maxHR;
+    @FXML
+    private PieChart pieChart;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private CategoryAxis xAxis;
+    double[] zone;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-             
+          
  
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
@@ -111,8 +128,59 @@ public class MainController implements Initializable {
                 changeWiew(trackDatabase.get(dateId));
             }
         });
-        //exitButton.disableProperty().set(true);
-        
+
+//        exitButton.disableProperty().set(true);
+        double[] zone= new double[5];;
+           maxHR.valueProperty().addListener(new ChangeListener(){
+        @Override public void changed(ObservableValue o,Object oldVal,Object newVal){
+            if(currentTrack!=null){
+             int max = (int) maxHR.getValue();
+                     for (double d : zone) {
+            d=0;
+        }
+             for (Chunk t : currentTrack.getChunks()) {
+            if (t.getAvgHeartRate() >= 0.9 * max) {
+                zone[0]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.8 * max) {
+                zone[1]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.7 * max) {
+                zone[2]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.6 * max) {
+                zone[3]++;
+            } else {
+                zone[4]++;
+            }
+        }
+        for (double d : zone) {
+            d = d / currentTrack.getChunks().size();
+            System.out.println(d);
+        }
+        System.out.println(currentTrack.getChunks().size());
+            }
+
+    
+    
+    ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Grapefruit", 13),
+                new PieChart.Data("Oranges", 25),
+                new PieChart.Data("Plums", 10),
+                new PieChart.Data("Pears", 22),
+                new PieChart.Data("Apples", 30));
+    
+            
+            
+            
+            
+            
+        }
+      });
     }
 //    
     @FXML private void closeApplication(MouseEvent event)
@@ -147,11 +215,11 @@ public class MainController implements Initializable {
     }
     
     private void changeWiew(TrackData trackData) {
-       scrollableContent.getScene().setCursor(Cursor.WAIT);
         ChangeText(trackData);
         ChangeCharts(trackData);
+        
         CalculateMonth();
-       scrollableContent.getScene().setCursor(Cursor.DEFAULT);
+       exitButton.getScene().setCursor(Cursor.DEFAULT);
     }
 
     private void ChangeText(TrackData trackData) {
@@ -196,6 +264,7 @@ public class MainController implements Initializable {
             distance += chunks.get(i).getDistance();
             mean3[0] += chunks.get(i).getSpeed();
             mean3[1] += chunks.get(i).getAvgCadence();
+            
             int size = round(chunks.size()/500);
             if (i % size == 0) {
                 height.getData().add(new XYChart.Data<>(distance / 1000, currentHeight));
@@ -243,7 +312,6 @@ public class MainController implements Initializable {
         MonthSummary.getData().add(monthTime);
         
     }
-    @FXML
     private void SpeedChartData(ActionEvent event) {
         if (lineChart.getData().contains(speed)) {
             lineChart.getData().remove(speed);
@@ -251,7 +319,6 @@ public class MainController implements Initializable {
             lineChart.getData().add(speed);
         }
     }
-    @FXML
     private void HeartChartData(ActionEvent event) {
         if (lineChart.getData().contains(heartRate)) {
             lineChart.getData().remove(heartRate);
@@ -259,7 +326,6 @@ public class MainController implements Initializable {
             lineChart.getData().add(heartRate);
         }
     }
-    @FXML
     private void PedalingChartData(ActionEvent event) {
 
         if (lineChart.getData().contains(pedalingRate)) {
@@ -275,5 +341,46 @@ public class MainController implements Initializable {
         trackDatabase.clear();
         calendarView.highlightedCalendars().clear();
     }
+    //int[] z1,z2,z3,z4,z5=0;
+     //double[] zone = new double[5];
+    private void ReloadPieChart(ActionEvent event) {
+        int max = (int) maxHR.getValue();
+        for (Chunk t : currentTrack.getChunks()) {
+            if (t.getAvgHeartRate() >= 0.9 * max) {
+                zone[0]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.8 * max) {
+                zone[1]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.7 * max) {
+                zone[2]++;
+                continue;
+            }
+            if (t.getAvgHeartRate() >= 0.6 * max) {
+                zone[3]++;
+            } else {
+                zone[4]++;
+            }
+        }
+        for (double d : zone) {
+            d = d / currentTrack.getChunks().size();
+            System.out.println(d);
+        }
+        System.out.println(currentTrack.getChunks().size());
+        
+
+    
+    
+    ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Grapefruit", 13),
+                new PieChart.Data("Oranges", 25),
+                new PieChart.Data("Plums", 10),
+                new PieChart.Data("Pears", 22),
+                new PieChart.Data("Apples", 30));
+    }
 
 }
+
