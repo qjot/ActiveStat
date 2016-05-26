@@ -44,13 +44,10 @@ import javafx.scene.Cursor;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import jgpx.model.gpx.Bounds;
 
@@ -60,19 +57,29 @@ import jgpx.model.gpx.Bounds;
  */
 public class MainController implements Initializable {
 
-    @FXML private TitledPane infoPane;
-    @FXML private Label dateLabel;
-    @FXML private Label durationLabel;
-    @FXML private Label exerciseTimeLabel;
-    @FXML private Label distanceLabel;
-    @FXML private Label slopeLabel;
-    @FXML private Label avgSpeedLabel;
-    @FXML private Label maxSpeedLabel;
-    @FXML private Label maxHeartRate;
-    @FXML private Label minHeartRate;
-    @FXML private Label avgHeartRate;
-    @FXML private Label maxPedalingRateLabel;
-    @FXML private Label avgPedalingRateLabel;
+    private Label dateLabel;
+    @FXML
+    private Label durationLabel;
+    @FXML
+    private Label exerciseTimeLabel;
+    @FXML
+    private Label distanceLabel;
+    @FXML
+    private Label slopeLabel;
+    @FXML
+    private Label avgSpeedLabel;
+    @FXML
+    private Label maxSpeedLabel;
+    @FXML
+    private Label maxHeartRate;
+    @FXML
+    private Label minHeartRate;
+    @FXML
+    private Label avgHeartRate;
+    @FXML
+    private Label maxPedalingRateLabel;
+    @FXML
+    private Label avgPedalingRateLabel;
     @FXML private LineChart<Number, Number> lineChart;
     //@FXML private NumberAxis xAxis;
     //@FXML private NumberAxis yAxis;
@@ -82,8 +89,7 @@ public class MainController implements Initializable {
     @FXML private Button exitButton;
     private AnchorPane scrollableContent;
     @FXML private CheckBox speedBox;
-    @FXML private CheckBox heartBox;
-    @FXML private CheckBox pedalingBox;
+    
     @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
 
@@ -103,7 +109,10 @@ public class MainController implements Initializable {
     private BarChart<String, Number> MonthSummary;
     @FXML
     private GridPane statsGrid1;
-
+    @FXML
+    private CheckBox heartBox;
+    @FXML
+    private CheckBox pedalingBox;
     @FXML
     private AreaChart<?, ?> hightAreaChart;
     @FXML
@@ -129,7 +138,7 @@ public class MainController implements Initializable {
             }
         });
 
-//        exitButton.disableProperty().set(true);
+        exitButton.disableProperty().set(true);
         double[] zone= new double[5];;
            maxHR.valueProperty().addListener(new ChangeListener(){
         @Override public void changed(ObservableValue o,Object oldVal,Object newVal){
@@ -182,20 +191,20 @@ public class MainController implements Initializable {
         }
       });
     }
-//    
-    @FXML private void closeApplication(MouseEvent event)
-    {
-         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Exit");
-                alert.setHeaderText("You have not any optional parts!");
-                alert.setContentText("Youwant to exit?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {                    
-               Platform.exit();  
-                }
-                       
-        
-    }
+//    @FXML private void closeApplication(MouseEvent event)
+//    {
+//         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setTitle("Exit");
+//                alert.setHeaderText("You have not any optional parts!");
+//                alert.setContentText("Are You sure to?");
+//                Optional<ButtonType> result = alert.showAndWait();
+//                if (result.isPresent() && result.get() == ButtonType.OK) {                    
+//               // SaveConfiguration(configurationName);
+//                }
+//              Platform.exit();           
+//
+//        
+//    }
       @FXML
     private void load(MouseEvent event) {
 
@@ -223,9 +232,7 @@ public class MainController implements Initializable {
     }
 
     private void ChangeText(TrackData trackData) {
-        
-        infoPane.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
-        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
+       durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
         slopeLabel.setText(String.format("%.0f m", trackData.getTotalAscent() + trackData.getTotalDescend()));
