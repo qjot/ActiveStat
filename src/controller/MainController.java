@@ -175,6 +175,7 @@ public class MainController implements Initializable {
 
                     for (double d : zone) {
                         d = d / currentTrack.getChunks().size();
+                      
                     }
 
                     ObservableList<PieChart.Data> pieChartData
