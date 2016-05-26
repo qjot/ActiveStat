@@ -39,6 +39,7 @@
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ClearCalendar" prefHeight="67.0" prefWidth="99.0" styleClass="clear-button" text="Clear Data" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" layoutX="183.0" layoutY="5.0" onMouseClicked="#load" prefHeight="67.0" prefWidth="485.0" progress="0.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="exitButton" cacheShape="false" mnemonicParsing="false" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="337.0" layoutY="12.0" onMouseClicked="#load" prefHeight="50.0" prefWidth="183.0" styleClass="labelText" text="Load" AnchorPane.leftAnchor="337.0" AnchorPane.rightAnchor="337.0" />
                </children>
             </AnchorPane>
             <ScrollPane fx:id="scrollPane" prefHeight="594.0" prefWidth="852.0">
@@ -59,7 +60,7 @@
                                       <content>
                                     <AnchorPane prefHeight="1046.0" prefWidth="853.0">
                                        <children>
-                                                    <VBox fx:id="vBoxMain" layoutX="5.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="848.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
+                                                    <VBox fx:id="vBoxMain" layoutX="5.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
                                                         <children>
                                                 <AnchorPane minWidth="-Infinity" prefHeight="269.0" prefWidth="844.0">
                                                    <children>
@@ -231,9 +232,9 @@
                                                                <children>
                                                                   <HBox alignment="CENTER" prefWidth="811.0">
                                                                      <children>
-                                                                        <CheckBox fx:id="speedBox" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
-                                                                        <CheckBox fx:id="heartBox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
-                                                                        <CheckBox fx:id="pedalingBox" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
+                                                                        <CheckBox fx:id="speedBox" onAction="#SpeedChartData" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
+                                                                        <CheckBox fx:id="heartBox" onAction="#HeartChartData" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
+                                                                        <CheckBox fx:id="pedalingBox" onAction="#PedalingChartData" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
                                                                      </children>
                                                                   </HBox>
                                                                               <LineChart fx:id="lineChart" createSymbols="false" minHeight="-Infinity" prefHeight="400.0" prefWidth="828.0">
@@ -244,9 +245,9 @@
                                                                                       <NumberAxis side="LEFT" />
                                                                                   </yAxis>
                                                                               </LineChart>
-                                                                  <AreaChart fx:id="hightAreaChart" prefHeight="370.0" prefWidth="828.0">
+                                                                  <AreaChart fx:id="hightAreaChart" createSymbols="false" prefHeight="370.0" prefWidth="828.0">
                                                                     <xAxis>
-                                                                      <CategoryAxis side="BOTTOM" />
+                                                                      <NumberAxis side="BOTTOM" />
                                                                     </xAxis>
                                                                     <yAxis>
                                                                       <NumberAxis side="LEFT" />
