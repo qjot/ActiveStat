@@ -44,6 +44,8 @@ import javafx.scene.Cursor;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
@@ -137,7 +139,7 @@ public class MainController implements Initializable {
             }
         });
         
-        exitButton.disableProperty().set(true);
+        //exitButton.disableProperty().set(true);
         double[] zone = new double[5];;
         maxHR.valueProperty().addListener(new ChangeListener() {
             @Override
@@ -188,20 +190,20 @@ public class MainController implements Initializable {
             }
         });
     }
-//    @FXML private void closeApplication(MouseEvent event)
-//    {
-//         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("Exit");
-//                alert.setHeaderText("You have not any optional parts!");
-//                alert.setContentText("Are You sure to?");
-//                Optional<ButtonType> result = alert.showAndWait();
-//                if (result.isPresent() && result.get() == ButtonType.OK) {                    
-//               // SaveConfiguration(configurationName);
-//                }
-//              Platform.exit();           
-//
-//        
-//    }
+    @FXML private void closeApplication(MouseEvent event)
+    {
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Exit");
+                //alert.setHeaderText("You have not any optional parts!");
+                alert.setContentText("You want to exit?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {                    
+               // SaveConfiguration(configurationName);
+                }
+              Platform.exit();           
+
+        
+    }
       @FXML
     private void load(MouseEvent event) {
 

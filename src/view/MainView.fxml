@@ -37,11 +37,11 @@
                <children>
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ClearCalendar" prefHeight="67.0" prefWidth="99.0" styleClass="clear-button" text="Clear Data" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" layoutX="183.0" layoutY="5.0" onMouseClicked="#load" prefHeight="67.0" prefWidth="485.0" progress="0.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="exitButton" cacheShape="false" mnemonicParsing="false" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="exitButton" cacheShape="false" mnemonicParsing="false" onMouseClicked="#closeApplication" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="337.0" layoutY="12.0" onMouseClicked="#load" prefHeight="50.0" prefWidth="183.0" styleClass="labelText" text="Load" AnchorPane.leftAnchor="337.0" AnchorPane.rightAnchor="337.0" />
                </children>
             </AnchorPane>
-            <ScrollPane fx:id="scrollPane" prefHeight="594.0" prefWidth="852.0" vvalue="1.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="594.0" prefWidth="852.0">
                <content>
                   <VBox alignment="TOP_CENTER" prefHeight="1396.0" prefWidth="850.0">
                      <children>
@@ -52,6 +52,9 @@
                            <font>
                               <Font size="22.0" />
                            </font>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
                         </TitledPane>
                           <TabPane minHeight="-Infinity" prefHeight="1208.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
                               <tabs>
@@ -63,7 +66,7 @@
                                                         <children>
                                                 <AnchorPane minWidth="-Infinity" prefHeight="269.0" prefWidth="844.0">
                                                    <children>
-                                                      <TitledPane alignment="CENTER" text="Date" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                                                      <TitledPane alignment="CENTER" text="Date" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
                                                             <Font size="22.0" />
                                                          </font>
@@ -225,7 +228,7 @@
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="214.0" prefWidth="850.0">
                                                    <children>
-                                                      <TitledPane layoutX="5.0" layoutY="4.0" minHeight="-Infinity" prefHeight="798.0" prefWidth="850.0" text="Charts" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                                                      <TitledPane layoutX="5.0" layoutY="4.0" minHeight="-Infinity" prefHeight="798.0" prefWidth="850.0" text="Charts" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <content>
                                                             <VBox minHeight="-Infinity" prefHeight="601.0" prefWidth="848.0">
                                                                <children>
