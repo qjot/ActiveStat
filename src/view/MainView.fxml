@@ -232,9 +232,9 @@
                                                                <children>
                                                                   <HBox alignment="CENTER" prefWidth="811.0">
                                                                      <children>
-                                                                        <CheckBox fx:id="speedBox" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
-                                                                        <CheckBox fx:id="heartBox" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
-                                                                        <CheckBox fx:id="pedalingBox" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
+                                                                        <CheckBox fx:id="speedBox" onAction="#SpeedChartData" alignment="CENTER" mnemonicParsing="false" text="Speed" textAlignment="CENTER" />
+                                                                        <CheckBox fx:id="heartBox" onAction="#HeartChartData" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Heart Rate" />
+                                                                        <CheckBox fx:id="pedalingBox" onAction="#PedalingChartData" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Pedaling Rate" />
                                                                      </children>
                                                                   </HBox>
                                                                               <LineChart fx:id="lineChart" createSymbols="false" minHeight="-Infinity" prefHeight="400.0" prefWidth="828.0">
@@ -245,9 +245,9 @@
                                                                                       <NumberAxis side="LEFT" />
                                                                                   </yAxis>
                                                                               </LineChart>
-                                                                  <AreaChart fx:id="hightAreaChart" prefHeight="370.0" prefWidth="828.0">
+                                                                  <AreaChart fx:id="hightAreaChart" createSymbols="false" prefHeight="370.0" prefWidth="828.0">
                                                                     <xAxis>
-                                                                      <CategoryAxis side="BOTTOM" />
+                                                                      <NumberAxis side="BOTTOM" />
                                                                     </xAxis>
                                                                     <yAxis>
                                                                       <NumberAxis side="LEFT" />

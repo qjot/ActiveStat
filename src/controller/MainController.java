@@ -318,6 +318,7 @@ public class MainController implements Initializable {
         MonthSummary.getData().add(monthTime);
         
     }
+    @FXML
     private void SpeedChartData(ActionEvent event) {
         if (lineChart.getData().contains(speed)) {
             lineChart.getData().remove(speed);
@@ -325,14 +326,14 @@ public class MainController implements Initializable {
             lineChart.getData().add(speed);
         }
     }
-    private void HeartChartData(ActionEvent event) {
+    @FXML private void HeartChartData(ActionEvent event) {
         if (lineChart.getData().contains(heartRate)) {
             lineChart.getData().remove(heartRate);
         } else {
             lineChart.getData().add(heartRate);
         }
     }
-    private void PedalingChartData(ActionEvent event) {
+   @FXML private void PedalingChartData(ActionEvent event) {
 
         if (lineChart.getData().contains(pedalingRate)) {
             lineChart.getData().remove(pedalingRate);
