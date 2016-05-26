@@ -106,8 +106,6 @@ public class MainController implements Initializable {
     private final ObservableList<TrackData> trackDatabase= observableArrayList();
     private TrackData currentTrack;
     @FXML
-    private ProgressIndicator chartProgress;
-    @FXML
     private BarChart<String, Number> MonthSummary;
     @FXML
     private GridPane statsGrid1;
@@ -126,6 +124,12 @@ public class MainController implements Initializable {
     @FXML
     private CategoryAxis xAxis;
     double[] zone;
+    @FXML
+    private CheckBox speedBoxMonth;
+    @FXML
+    private CheckBox heartBoxMonth;
+    @FXML
+    private CheckBox pedalingBoxMonth;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -347,32 +351,32 @@ public class MainController implements Initializable {
         }
 
     }
-    @FXML private void MonthSpeedData(ActionEvent event) {
+  @FXML   private void MonthSpeedData(ActionEvent event) {
 
         if (MonthSummary.getData().contains(monthSpeed)) {
-            lineChart.getData().remove(monthSpeed);
+            MonthSummary.getData().remove(monthSpeed);
         } else {
-            lineChart.getData().add(monthSpeed);
+            MonthSummary.getData().add(monthSpeed);
             
         }
 
     }
-@FXML private void MonthDistanceData(ActionEvent event) {
+ @FXML private void MonthDistanceData(ActionEvent event) {
 
         if (MonthSummary.getData().contains(monthDistance)) {
-            lineChart.getData().remove(monthDistance);
+            MonthSummary.getData().remove(monthDistance);
         } else {
-            lineChart.getData().add(monthDistance);
+            MonthSummary.getData().add(monthDistance);
             
         }
 
     }
-@FXML private void MonthDistanceData(ActionEvent event) {
+   @FXML private void MonthTimeData(ActionEvent event) {
 
         if (MonthSummary.getData().contains(monthTime)) {
-            lineChart.getData().remove(monthTime);
+            MonthSummary.getData().remove(monthTime);
         } else {
-            lineChart.getData().add(monthTime);
+            MonthSummary.getData().add(monthTime);
             
         }
 

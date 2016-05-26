@@ -280,9 +280,9 @@
                                               <children>
                                           <HBox alignment="CENTER" prefWidth="811.0">
                                              <children>
-                                                <CheckBox fx:id="speedBoxMonth" alignment="CENTER" mnemonicParsing="false" onAction="#SpeedChartData" text="Speed" textAlignment="CENTER" />
-                                                <CheckBox fx:id="heartBoxMonh" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#HeartChartData" text="Heart Rate" />
-                                                <CheckBox fx:id="pedalingBoxMonth" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" onAction="#PedalingChartData" text="Pedaling Rate" />
+                                                <CheckBox fx:id="speedBoxMonth" alignment="CENTER" mnemonicParsing="false" onAction="#MonthSpeedData" text="Speed" textAlignment="CENTER" />
+                                                <CheckBox fx:id="heartBoxMonth" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#MonthDistanceData" text="Distance" />
+                                                <CheckBox fx:id="pedalingBoxMonth" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" onAction="#MonthTimeData" text="Time" />
                                              </children>
                                           </HBox>
                                                   <BarChart fx:id="MonthSummary" layoutX="44.0" layoutY="44.0" prefHeight="452.0" prefWidth="850.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
