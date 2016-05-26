@@ -29,7 +29,7 @@
 
 <AnchorPane id="AnchorPane" minHeight="600.0" minWidth="820.0" prefHeight="650.0" prefWidth="850.0" stylesheets="@MyStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
-      <VBox layoutX="-5.0" layoutY="-5.400000095367432">
+      <VBox layoutX="-5.0" layoutY="-5.400000095367432" AnchorPane.bottomAnchor="-281.59999990463257" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="3.0">
          <children>
             <AnchorPane prefHeight="50.0" prefWidth="850.0">
                <children>
@@ -38,21 +38,18 @@
                   <Button fx:id="exitButton" cacheShape="false" mnemonicParsing="false" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-            <ScrollPane prefHeight="594.0" prefWidth="852.0">
+            <TitledPane alignment="CENTER" text="Calendar">
+               <content>
+                              <CalendarPicker fx:id="calendarView" minHeight="-Infinity" prefHeight="241.0" prefWidth="765.0" stylesheets="@CalendarPicker.css" />
+               </content>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TitledPane>
+            <ScrollPane fx:id="scrollPane" prefHeight="594.0" prefWidth="852.0">
                <content>
                   <VBox alignment="TOP_CENTER" prefHeight="1302.0" prefWidth="850.0">
                      <children>
-                        <TitledPane alignment="CENTER" text="Calendar">
-                           <content>
-                                          <CalendarPicker fx:id="calendarView" minHeight="-Infinity" prefHeight="241.0" prefWidth="848.0" stylesheets="@CalendarPicker.css" />
-                           </content>
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                           <padding>
-                              <Insets right="15.0" />
-                           </padding>
-                        </TitledPane>
                           <TabPane minHeight="-Infinity" prefHeight="1100.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
                               <tabs>
                                   <Tab text="Training">
