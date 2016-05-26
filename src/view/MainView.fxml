@@ -92,7 +92,7 @@
                                                                            </HBox.margin>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="DURATION" />
-                                                                        <Label fx:id="durationLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="durationLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -106,7 +106,7 @@
                                                                            </HBox.margin>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="SLOPE" />
-                                                                        <Label fx:id="slopeLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="slopeLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -117,7 +117,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="EXERCISE TIME" />
-                                                                        <Label fx:id="exerciseTimeLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="exerciseTimeLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
@@ -128,7 +128,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="DISTANCE" />
-                                                                        <Label fx:id="distanceLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="distanceLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -139,7 +139,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="MAX SPEED" />
-                                                                        <Label fx:id="maxSpeedLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="maxSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -153,7 +153,7 @@
                                                                            </HBox.margin>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="AVG SPEED" />
-                                                                        <Label fx:id="avgSpeedLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="avgSpeedLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
@@ -167,7 +167,7 @@
                                                                            </HBox.margin>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="MAX PEDALING RATE" />
-                                                                        <Label fx:id="maxPedalingRateLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="maxPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
@@ -181,7 +181,7 @@
                                                                            </HBox.margin>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="MAX HEART RATE" />
-                                                                        <Label fx:id="maxHeartRate1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="maxHeartRate" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -192,7 +192,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="MIN HEART RATE" />
-                                                                        <Label fx:id="minHeartRate1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="minHeartRate" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -203,7 +203,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="AVG HEART RATE" />
-                                                                        <Label fx:id="avgHeartRate1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="avgHeartRate" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="504.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -214,7 +214,7 @@
                                                                            </image>
                                                                         </ImageView>
                                                                         <Label prefHeight="56.0" prefWidth="122.0" text="AVG PEDALING RATE" />
-                                                                        <Label fx:id="avgPedalingRateLabel1" prefHeight="96.0" prefWidth="106.0" />
+                                                                        <Label fx:id="avgPedalingRateLabel" prefHeight="96.0" prefWidth="106.0" />
                                                                      </children>
                                                                   </HBox>
                                                                </children>

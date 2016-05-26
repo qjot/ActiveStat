@@ -10,7 +10,9 @@ import static java.lang.Math.round;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -56,16 +58,27 @@ import jgpx.model.gpx.Bounds;
 public class MainController implements Initializable {
 
     private Label dateLabel;
+    @FXML
     private Label durationLabel;
+    @FXML
     private Label exerciseTimeLabel;
+    @FXML
     private Label distanceLabel;
+    @FXML
     private Label slopeLabel;
+    @FXML
     private Label avgSpeedLabel;
+    @FXML
     private Label maxSpeedLabel;
+    @FXML
     private Label maxHeartRate;
+    @FXML
     private Label minHeartRate;
+    @FXML
     private Label avgHeartRate;
+    @FXML
     private Label maxPedalingRateLabel;
+    @FXML
     private Label avgPedalingRateLabel;
     @FXML private LineChart<Number, Number> lineChart;
     //@FXML private NumberAxis xAxis;
@@ -76,8 +89,7 @@ public class MainController implements Initializable {
     @FXML private Button exitButton;
     private AnchorPane scrollableContent;
     @FXML private CheckBox speedBox;
-    private CheckBox heartRateBox;
-    private CheckBox pedalingRateBox;
+    
     @FXML ScrollPane scrollPane;
     FileParserRunner runningFileLoader;
 
@@ -98,28 +110,6 @@ public class MainController implements Initializable {
     @FXML
     private GridPane statsGrid1;
     @FXML
-    private Label durationLabel1;
-    @FXML
-    private Label slopeLabel1;
-    @FXML
-    private Label exerciseTimeLabel1;
-    @FXML
-    private Label distanceLabel1;
-    @FXML
-    private Label maxSpeedLabel1;
-    @FXML
-    private Label avgSpeedLabel1;
-    @FXML
-    private Label maxPedalingRateLabel1;
-    @FXML
-    private Label maxHeartRate1;
-    @FXML
-    private Label minHeartRate1;
-    @FXML
-    private Label avgHeartRate1;
-    @FXML
-    private Label avgPedalingRateLabel1;
-    @FXML
     private CheckBox heartBox;
     @FXML
     private CheckBox pedalingBox;
@@ -133,7 +123,7 @@ public class MainController implements Initializable {
     private NumberAxis yAxis;
     @FXML
     private CategoryAxis xAxis;
-    
+    double[] zone;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -147,12 +137,17 @@ public class MainController implements Initializable {
                 changeWiew(trackDatabase.get(dateId));
             }
         });
+
         exitButton.disableProperty().set(true);
+        double[] zone= new double[5];;
            maxHR.valueProperty().addListener(new ChangeListener(){
         @Override public void changed(ObservableValue o,Object oldVal,Object newVal){
             if(currentTrack!=null){
              int max = (int) maxHR.getValue();
-        for (Chunk t : currentTrack.getChunks()) {
+                     for (double d : zone) {
+            d=0;
+        }
+             for (Chunk t : currentTrack.getChunks()) {
             if (t.getAvgHeartRate() >= 0.9 * max) {
                 zone[0]++;
                 continue;
@@ -195,8 +190,21 @@ public class MainController implements Initializable {
             
         }
       });
-        
     }
+//    @FXML private void closeApplication(MouseEvent event)
+//    {
+//         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setTitle("Exit");
+//                alert.setHeaderText("You have not any optional parts!");
+//                alert.setContentText("Are You sure to?");
+//                Optional<ButtonType> result = alert.showAndWait();
+//                if (result.isPresent() && result.get() == ButtonType.OK) {                    
+//               // SaveConfiguration(configurationName);
+//                }
+//              Platform.exit();           
+//
+//        
+//    }
       @FXML
     private void load(MouseEvent event) {
 
@@ -216,8 +224,6 @@ public class MainController implements Initializable {
     }
     
     private void changeWiew(TrackData trackData) {
-       exitButton.getScene().setCursor(Cursor.WAIT);
-        currentTrack=trackData;
         ChangeText(trackData);
         ChangeCharts(trackData);
         
@@ -226,8 +232,7 @@ public class MainController implements Initializable {
     }
 
     private void ChangeText(TrackData trackData) {
-        //dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
-        durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
+       durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
         slopeLabel.setText(String.format("%.0f m", trackData.getTotalAscent() + trackData.getTotalDescend()));
@@ -242,8 +247,8 @@ public class MainController implements Initializable {
 
     private void ChangeCharts(TrackData trackData) {
         speedBox.selectedProperty().set(true);
-        heartRateBox.selectedProperty().set(false);
-        pedalingRateBox.selectedProperty().set(false);
+        heartBox.selectedProperty().set(false);
+        pedalingBox.selectedProperty().set(false);
         //xAxis.setLabel("Distance");
         //yAxis.setLabel("Frequencies");
         ObservableList<Chunk> chunks = trackData.getChunks();
@@ -344,7 +349,7 @@ public class MainController implements Initializable {
         calendarView.highlightedCalendars().clear();
     }
     //int[] z1,z2,z3,z4,z5=0;
-     double[] zone = new double[5];
+     //double[] zone = new double[5];
     private void ReloadPieChart(ActionEvent event) {
         int max = (int) maxHR.getValue();
         for (Chunk t : currentTrack.getChunks()) {
@@ -385,3 +390,4 @@ public class MainController implements Initializable {
     }
 
 }
+
