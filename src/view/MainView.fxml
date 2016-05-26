@@ -60,7 +60,7 @@
                                       <content>
                                     <AnchorPane prefHeight="1046.0" prefWidth="853.0">
                                        <children>
-                                                    <VBox fx:id="vBoxMain" layoutX="5.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="848.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
+                                                    <VBox fx:id="vBoxMain" layoutX="5.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
                                                         <children>
                                                 <AnchorPane minWidth="-Infinity" prefHeight="269.0" prefWidth="844.0">
                                                    <children>
