@@ -35,7 +35,7 @@
                <children>
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ClearCalendar" prefHeight="67.0" prefWidth="99.0" styleClass="clear-button" text="Clear Data" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <ProgressBar fx:id="progressBarLoad" accessibleText="dasdas" layoutX="183.0" layoutY="5.0" onMouseClicked="#load" prefHeight="67.0" prefWidth="485.0" progress="0.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
-                  <Label layoutX="337.0" layoutY="9.0" prefHeight="50.0" prefWidth="180.0" styleClass="labelText" text="Load" textAlignment="CENTER" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="337.0" AnchorPane.rightAnchor="335.0" AnchorPane.topAnchor="9.0" />
+                  <Label fx:id="progressLabel" layoutX="402.0" layoutY="9.0" onMouseClicked="#load" prefHeight="49.0" prefWidth="49.0" styleClass="labelText" text="Load" textAlignment="CENTER" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="402.0" AnchorPane.rightAnchor="399.0" AnchorPane.topAnchor="9.0" />
                   <Button fx:id="closeButton" cacheShape="false" mnemonicParsing="false" onAction="#closeApplication" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
@@ -63,7 +63,7 @@
                                                               <children>
                                                       <AnchorPane>
                                                          <children>
-                                                            <TitledPane alignment="CENTER" layoutX="-4.0" layoutY="-7.0" text="Date" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="-7.0">
+                                                            <TitledPane fx:id="infoPane" alignment="CENTER" layoutX="-4.0" layoutY="-7.0" text="Date" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font size="22.0" />
                                                                </font>

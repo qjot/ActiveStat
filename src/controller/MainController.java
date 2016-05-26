@@ -45,6 +45,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import jgpx.model.gpx.Bounds;
 
@@ -54,6 +55,7 @@ import jgpx.model.gpx.Bounds;
  */
 public class MainController implements Initializable {
 
+    @FXML private TitledPane infoPane;
     @FXML private Label dateLabel;
     @FXML private Label durationLabel;
     @FXML private Label exerciseTimeLabel;
@@ -76,8 +78,8 @@ public class MainController implements Initializable {
     @FXML private Button exitButton;
     @FXML private AnchorPane scrollableContent;
     @FXML private CheckBox speedBox;
-    @FXML private CheckBox heartRateBox;
-    @FXML private CheckBox pedalingRateBox;
+    @FXML private CheckBox heartBox;
+    @FXML private CheckBox pedalingBox;
     @FXML ScrollPane scrollPane;
     @FXML private Button closeButton;
     FileParserRunner runningFileLoader;
@@ -118,12 +120,12 @@ public class MainController implements Initializable {
          Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit");
                 alert.setHeaderText("You have not any optional parts!");
-                alert.setContentText("Are You sure to?");
+                alert.setContentText("Youwant to exit?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {                    
-               // SaveConfiguration(configurationName);
+               Platform.exit();  
                 }
-              Platform.exit();           
+                       
         
     }
       @FXML
@@ -153,7 +155,8 @@ public class MainController implements Initializable {
     }
 
     private void ChangeText(TrackData trackData) {
-       // dateLabel.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
+        
+        infoPane.setText("Date: " + DateTimeUtils.format(trackData.getStartTime()));
         durationLabel.setText(DateTimeUtils.format(trackData.getTotalDuration()));
         exerciseTimeLabel.setText(DateTimeUtils.format(trackData.getMovingTime()));;
         distanceLabel.setText(String.format("%.0f m", trackData.getTotalDistance()));
@@ -169,8 +172,8 @@ public class MainController implements Initializable {
 
     private void ChangeCharts(TrackData trackData) {
         speedBox.selectedProperty().set(true);
-        heartRateBox.selectedProperty().set(false);
-        pedalingRateBox.selectedProperty().set(false);
+        heartBox.selectedProperty().set(false);
+        pedalingBox.selectedProperty().set(false);
         //xAxis.setLabel("Distance");
         //yAxis.setLabel("Frequencies");
         ObservableList<Chunk> chunks = trackData.getChunks();
