@@ -38,7 +38,7 @@
                   <Button fx:id="exitButton" cacheShape="false" mnemonicParsing="false" prefHeight="67.0" prefWidth="99.0" styleClass="exit-button" text="Exit" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-            <ScrollPane prefHeight="594.0" prefWidth="852.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="594.0" prefWidth="852.0">
                <content>
                   <VBox alignment="TOP_CENTER" prefHeight="1302.0" prefWidth="850.0">
                      <children>
