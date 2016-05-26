@@ -144,7 +144,6 @@ public class MainController implements Initializable {
         maxHR.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue o, Object oldVal, Object newVal) {
-                System.out.println("adsfasdf");
                 if (currentTrack != null) {
                     int max = (int) maxHR.getValue();
                     for (double d : zone) {
@@ -169,13 +168,11 @@ public class MainController implements Initializable {
                             zone[4]++;
                         }
                     }
-                    double sum = 0;
+
                     for (double d : zone) {
                         d = d / currentTrack.getChunks().size();
-                        System.out.println(d);
-                        sum += d;
                     }
-                    
+
                     ObservableList<PieChart.Data> pieChartData
                             = FXCollections.observableArrayList(
                                     new PieChart.Data("Z1 Recovery", zone[4]),
@@ -183,6 +180,7 @@ public class MainController implements Initializable {
                                     new PieChart.Data("Z3 Tempo", zone[2]),
                                     new PieChart.Data("Z4 Threshold", zone[1]),
                                     new PieChart.Data("Z5 Anaerobic ", zone[0]));
+                    pieChart.getData().clear();
                     pieChart.setData(pieChartData);
                     
                 }
@@ -292,10 +290,14 @@ public class MainController implements Initializable {
         lineChart.getData().add(speed);
         //lineChart.getData().add(pedalingRate);
         //lineChart.getData().add(heartRate);
+        hightAreaChart.getData().clear();
         hightAreaChart.getData().add(height);
     }
 
     private void CalculateMonth(){
+        speedBoxMonth.selectedProperty().set(true);
+        heartBoxMonth.selectedProperty().set(false);
+        pedalingBoxMonth.selectedProperty().set(false);
         int Month = calendarView.calendarProperty().get().getTime().getMonth()+1;
         //System.out.println(Month);
         monthSpeed = new XYChart.Series();
@@ -316,8 +318,8 @@ public class MainController implements Initializable {
         
         MonthSummary.getData().clear();
         MonthSummary.getData().add(monthSpeed);
-        MonthSummary.getData().add(monthDistance);
-        MonthSummary.getData().add(monthTime);
+        //MonthSummary.getData().add(monthDistance);
+        //MonthSummary.getData().add(monthTime);
         
     }
     @FXML
@@ -343,6 +345,37 @@ public class MainController implements Initializable {
             lineChart.getData().add(pedalingRate);
             
         }
+
+    }
+    @FXML private void MonthSpeedData(ActionEvent event) {
+
+        if (MonthSummary.getData().contains(monthSpeed)) {
+            lineChart.getData().remove(monthSpeed);
+        } else {
+            lineChart.getData().add(monthSpeed);
+            
+        }
+
+    }
+@FXML private void MonthDistanceData(ActionEvent event) {
+
+        if (MonthSummary.getData().contains(monthDistance)) {
+            lineChart.getData().remove(monthDistance);
+        } else {
+            lineChart.getData().add(monthDistance);
+            
+        }
+
+    }
+@FXML private void MonthDistanceData(ActionEvent event) {
+
+        if (MonthSummary.getData().contains(monthTime)) {
+            lineChart.getData().remove(monthTime);
+        } else {
+            lineChart.getData().add(monthTime);
+            
+        }
+
     }
 
     @FXML
