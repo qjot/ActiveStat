@@ -36,6 +36,7 @@ import jgpx.util.DateTimeUtils;
 import model.FileParserRunner;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressIndicator;
@@ -104,6 +105,7 @@ public class MainController implements Initializable {
             }
         });
         exitButton.disableProperty().set(true);
+        
     }
       @FXML
     private void load(MouseEvent event) {
@@ -119,13 +121,17 @@ public class MainController implements Initializable {
             progressBarLoad.progressProperty().bind(runningFileLoader.ProgressProperty());
             runningFileLoader.start();
         }
+        lineChart.animatedProperty().set(false);
+        MonthSummary.animatedProperty().set(false);
     }
     
     private void changeWiew(TrackData trackData) {
-        
+       scrollableContent.getScene().setCursor(Cursor.WAIT);
+
         ChangeText(trackData);
         ChangeCharts(trackData);
         CalculateMonth();
+       scrollableContent.getScene().setCursor(Cursor.DEFAULT);
     }
 
     private void ChangeText(TrackData trackData) {
@@ -200,6 +206,7 @@ public class MainController implements Initializable {
         monthDistance.setName("Total Distance");
         monthTime = new XYChart.Series();
         monthTime.setName("Total Time");
+        
         for (TrackData t : trackDatabase) {
             if (t.getStartTime().getMonth().getValue() == Month) {
                 monthSpeed.getData().add(new XYChart.Data<>(String.valueOf(t.getStartTime().getDayOfMonth()), t.getAverageSpeed()));
@@ -207,6 +214,7 @@ public class MainController implements Initializable {
                 monthTime.getData().add(new XYChart.Data<>(String.valueOf(t.getStartTime().getDayOfMonth()), t.getTotalDuration().toMinutes()));
             }
         }
+        
         
         MonthSummary.getData().clear();
         MonthSummary.getData().add(monthSpeed);
@@ -237,7 +245,7 @@ public class MainController implements Initializable {
             lineChart.getData().remove(pedalingRate);
         } else {
             lineChart.getData().add(pedalingRate);
-            lineChart.animatedProperty().set(false);
+            
         }
     }
 
