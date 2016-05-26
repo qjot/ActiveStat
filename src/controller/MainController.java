@@ -144,7 +144,7 @@ public class MainController implements Initializable {
         });
         
         //exitButton.disableProperty().set(true);
-        double[] zone = new double[5];;
+        double[] zone = new double[5];
         maxHR.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue o, Object oldVal, Object newVal) {
