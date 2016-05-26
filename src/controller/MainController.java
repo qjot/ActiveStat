@@ -129,67 +129,64 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-          
- 
+        
         calendarView.calendarProperty().addListener((ObservableValue<? extends Calendar> ov, Calendar old_val, Calendar new_val) -> {
             if (calendarView.highlightedCalendars().contains(new_val)) {
                 int dateId = calendarView.highlightedCalendars().indexOf(new_val);
                 changeWiew(trackDatabase.get(dateId));
             }
         });
-
+        
         exitButton.disableProperty().set(true);
-        double[] zone= new double[5];;
-           maxHR.valueProperty().addListener(new ChangeListener(){
-        @Override public void changed(ObservableValue o,Object oldVal,Object newVal){
-            if(currentTrack!=null){
-             int max = (int) maxHR.getValue();
-                     for (double d : zone) {
-            d=0;
-        }
-             for (Chunk t : currentTrack.getChunks()) {
-            if (t.getAvgHeartRate() >= 0.9 * max) {
-                zone[0]++;
-                continue;
+        double[] zone = new double[5];;
+        maxHR.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue o, Object oldVal, Object newVal) {
+                System.out.println("adsfasdf");
+                if (currentTrack != null) {
+                    int max = (int) maxHR.getValue();
+                    for (double d : zone) {
+                        d = 0;
+                    }
+                    for (Chunk t : currentTrack.getChunks()) {
+                        if (t.getAvgHeartRate() >= 0.9 * max) {
+                            zone[0]++;
+                            continue;
+                        }
+                        if (t.getAvgHeartRate() >= 0.8 * max) {
+                            zone[1]++;
+                            continue;
+                        }
+                        if (t.getAvgHeartRate() >= 0.7 * max) {
+                            zone[2]++;
+                            continue;
+                        }
+                        if (t.getAvgHeartRate() >= 0.6 * max) {
+                            zone[3]++;
+                        } else {
+                            zone[4]++;
+                        }
+                    }
+                    double sum = 0;
+                    for (double d : zone) {
+                        d = d / currentTrack.getChunks().size();
+                        System.out.println(d);
+                        sum += d;
+                    }
+                    
+                    ObservableList<PieChart.Data> pieChartData
+                            = FXCollections.observableArrayList(
+                                    new PieChart.Data("Z1 Recovery", zone[4]),
+                                    new PieChart.Data("Z2 Endurance", zone[3]),
+                                    new PieChart.Data("Z3 Tempo", zone[2]),
+                                    new PieChart.Data("Z4 Threshold", zone[1]),
+                                    new PieChart.Data("Z5 Anaerobic ", zone[0]));
+                    pieChart.setData(pieChartData);
+                    
+                }
+                
             }
-            if (t.getAvgHeartRate() >= 0.8 * max) {
-                zone[1]++;
-                continue;
-            }
-            if (t.getAvgHeartRate() >= 0.7 * max) {
-                zone[2]++;
-                continue;
-            }
-            if (t.getAvgHeartRate() >= 0.6 * max) {
-                zone[3]++;
-            } else {
-                zone[4]++;
-            }
-        }
-        for (double d : zone) {
-            d = d / currentTrack.getChunks().size();
-            System.out.println(d);
-        }
-        System.out.println(currentTrack.getChunks().size());
-            }
-
-    
-    
-    ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data("Grapefruit", 13),
-                new PieChart.Data("Oranges", 25),
-                new PieChart.Data("Plums", 10),
-                new PieChart.Data("Pears", 22),
-                new PieChart.Data("Apples", 30));
-    
-            
-            
-            
-            
-            
-        }
-      });
+        });
     }
 //    @FXML private void closeApplication(MouseEvent event)
 //    {
@@ -224,6 +221,7 @@ public class MainController implements Initializable {
     }
     
     private void changeWiew(TrackData trackData) {
+        currentTrack=trackData;
         ChangeText(trackData);
         ChangeCharts(trackData);
         
